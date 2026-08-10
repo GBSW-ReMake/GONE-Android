@@ -3,7 +3,7 @@
 > **완료일**: 2026-08-11
 > **작업 번호**: #01
 > **관련 이슈**: [#1](https://github.com/GBSW-ReMake/GONE-AOS/issues/1)
-> **PR**: 생성 후 기입
+> **PR**: [#2](https://github.com/GBSW-ReMake/GONE-AOS/pull/2)
 > **브랜치**: `feat/1-android-doc-architecture`
 
 ## 구현 요약
