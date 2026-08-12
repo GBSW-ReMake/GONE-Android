@@ -3,7 +3,7 @@
 > **완료일**: 2026-08-12
 > **작업 번호**: #02
 > **관련 이슈**: [#3](https://github.com/GBSW-ReMake/GONE-AOS/issues/3)
-> **PR**: 생성 후 기입
+> **PR**: [#4](https://github.com/GBSW-ReMake/GONE-Android/pull/4)
 > **브랜치**: `feat/3-auth-flow`
 
 ## 구현 요약
