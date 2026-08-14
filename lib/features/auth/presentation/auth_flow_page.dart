@@ -6,6 +6,7 @@ import 'login_page.dart';
 import 'role_selection_page.dart';
 import 'signup_page.dart';
 import 'splash_page.dart';
+import '../../home/presentation/home_page.dart';
 
 class AuthFlowPage extends ConsumerWidget {
   const AuthFlowPage({super.key});
@@ -31,12 +32,14 @@ class AuthFlowPage extends ConsumerWidget {
           role: flow.role,
           onBack: controller.showRoleSelection,
           onSignup: controller.showSignup,
+          onLogin: controller.showHome,
         ),
         AuthDestination.signup => SignupPage(
           key: const ValueKey('signup'),
           role: flow.role,
           onBack: controller.showLogin,
         ),
+        AuthDestination.home => const HomePage(key: ValueKey('home')),
       },
     );
   }
