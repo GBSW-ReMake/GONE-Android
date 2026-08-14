@@ -6,6 +6,7 @@ import '../../../core/design_system/gone_theme.dart';
 import '../application/lab_rental_notifier.dart';
 import '../domain/lab_rental.dart';
 import 'lab_rental_form_page.dart';
+import 'my_lab_rental_page.dart';
 
 class LabRentalPage extends ConsumerWidget {
   const LabRentalPage({super.key});
@@ -17,7 +18,7 @@ class LabRentalPage extends ConsumerWidget {
       return const LabRentalFormPage();
     }
     if (state.screen == LabRentalScreen.myRental) {
-      return const _LabRentalPlaceholder(label: '내 실습실 대여 화면을 준비 중입니다');
+      return const MyLabRentalPage();
     }
     return Scaffold(
       backgroundColor: const Color(0xFFF3F5F9),
@@ -273,19 +274,6 @@ class _AvailabilityBadge extends StatelessWidget {
         fontWeight: FontWeight.w600,
         color: available ? GoneColors.primary : const Color(0xFFD92D20),
       ),
-    ),
-  );
-}
-
-class _LabRentalPlaceholder extends StatelessWidget {
-  const _LabRentalPlaceholder({required this.label});
-  final String label;
-
-  @override
-  Widget build(BuildContext context) => Center(
-    child: Text(
-      label,
-      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
     ),
   );
 }
