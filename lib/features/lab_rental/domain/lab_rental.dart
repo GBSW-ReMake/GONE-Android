@@ -88,4 +88,22 @@ const mockLabRooms = [
     hasProjector: false,
     isAvailable: true,
   ),
+  LabRoom(
+    id: 'lab-301',
+    floor: 3,
+    number: 1,
+    name: '미디어 제작 실습실',
+    capacity: 18,
+    hasProjector: true,
+    isAvailable: true,
+  ),
+  LabRoom(
+    id: 'lab-201',
+    floor: 2,
+    number: 1,
+    name: '공용 프로젝트실',
+    capacity: 12,
+    hasProjector: false,
+    isAvailable: true,
+  ),
 ];
