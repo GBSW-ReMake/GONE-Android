@@ -10,11 +10,13 @@ class LoginPage extends StatefulWidget {
     required this.role,
     required this.onBack,
     required this.onSignup,
+    required this.onLogin,
   });
 
   final AccountRole role;
   final VoidCallback onBack;
   final VoidCallback onSignup;
+  final VoidCallback onLogin;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -42,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
           : null;
     });
     if (_identifierError == null && _passwordError == null) {
-      showServiceNotice(context, '로그인 서비스 연결 정보를 확인 중입니다. 잠시 후 다시 시도해주세요.');
+      widget.onLogin();
     }
   }
 

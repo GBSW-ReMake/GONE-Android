@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/account_role.dart';
 
-enum AuthDestination { splash, roleSelection, login, signup }
+enum AuthDestination { splash, roleSelection, login, signup, home }
 
 class AuthFlowState {
   const AuthFlowState({
@@ -42,6 +42,8 @@ class AuthFlowNotifier extends Notifier<AuthFlowState> {
   void showRoleSelection() {
     state = state.copyWith(destination: AuthDestination.roleSelection);
   }
+
+  void showHome() => state = state.copyWith(destination: AuthDestination.home);
 }
 
 final authFlowProvider = NotifierProvider<AuthFlowNotifier, AuthFlowState>(
