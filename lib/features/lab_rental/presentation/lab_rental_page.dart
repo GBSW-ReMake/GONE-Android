@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/design_system/gone_theme.dart';
 import '../application/lab_rental_notifier.dart';
 import '../domain/lab_rental.dart';
+import 'lab_rental_form_page.dart';
 
 class LabRentalPage extends ConsumerWidget {
   const LabRentalPage({super.key});
@@ -12,19 +13,15 @@ class LabRentalPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(labRentalProvider);
+    if (state.screen == LabRentalScreen.form) {
+      return const LabRentalFormPage();
+    }
+    if (state.screen == LabRentalScreen.myRental) {
+      return const _LabRentalPlaceholder(label: '내 실습실 대여 화면을 준비 중입니다');
+    }
     return Scaffold(
       backgroundColor: const Color(0xFFF3F5F9),
-      body: SafeArea(
-        child: switch (state.screen) {
-          LabRentalScreen.rooms => const _LabRoomsView(),
-          LabRentalScreen.form => const _LabRentalPlaceholder(
-            label: '대여 신청 화면을 준비 중입니다',
-          ),
-          LabRentalScreen.myRental => const _LabRentalPlaceholder(
-            label: '내 실습실 대여 화면을 준비 중입니다',
-          ),
-        },
-      ),
+      body: SafeArea(child: const _LabRoomsView()),
       bottomNavigationBar: const _LabBottomNavigation(),
     );
   }
