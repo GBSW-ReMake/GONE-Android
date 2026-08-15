@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/design_system/gone_theme.dart';
+import '../../lab_rental/presentation/lab_rental_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,16 +30,18 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF3F5F9),
-      body: SafeArea(
-        child: _selectedTab == 0
-            ? _home()
-            : Center(
-                child: Text(
-                  '준비 중인 기능입니다',
-                  style: _text(size: 16, weight: FontWeight.w600),
-                ),
-              ),
-      ),
+      body: _selectedTab == 1
+          ? const LabRentalPage(showBottomNavigation: false)
+          : SafeArea(
+              child: _selectedTab == 0
+                  ? _home()
+                  : Center(
+                      child: Text(
+                        '준비 중인 기능입니다',
+                        style: _text(size: 16, weight: FontWeight.w600),
+                      ),
+                    ),
+            ),
       bottomNavigationBar: _bottomNavigation(),
     );
   }
