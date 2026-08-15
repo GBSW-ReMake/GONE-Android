@@ -83,13 +83,24 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 28),
               TextField(
                 controller: _identifierController,
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.next,
+                enableSuggestions: false,
+                autocorrect: false,
                 autofillHints: const [AutofillHints.username],
                 onChanged: (_) => setState(() => _identifierError = null),
                 decoration: InputDecoration(
                   labelText: '아이디',
                   hintText: '아이디 또는 전화번호를 입력해주세요',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  labelStyle: const TextStyle(
+                    color: Color(0xFF667085),
+                    fontWeight: FontWeight.w600,
+                  ),
+                  hintStyle: const TextStyle(
+                    color: Color(0xFF98A2B3),
+                    fontSize: 18,
+                  ),
                   errorText: _identifierError,
                 ),
               ),
@@ -97,12 +108,24 @@ class _LoginPageState extends State<LoginPage> {
               TextField(
                 controller: _passwordController,
                 obscureText: true,
+                keyboardType: TextInputType.visiblePassword,
+                enableSuggestions: false,
+                autocorrect: false,
                 autofillHints: const [AutofillHints.password],
                 onChanged: (_) => setState(() => _passwordError = null),
                 onSubmitted: (_) => _submit(),
                 decoration: InputDecoration(
                   labelText: '비밀번호',
                   hintText: '비밀번호를 입력해주세요',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  labelStyle: const TextStyle(
+                    color: Color(0xFF667085),
+                    fontWeight: FontWeight.w600,
+                  ),
+                  hintStyle: const TextStyle(
+                    color: Color(0xFF98A2B3),
+                    fontSize: 18,
+                  ),
                   errorText: _passwordError,
                 ),
               ),
