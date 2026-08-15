@@ -16,6 +16,15 @@ class _LabRentalFormPageState extends ConsumerState<LabRentalFormPage> {
   final _leaderController = TextEditingController();
   final _membersController = TextEditingController();
   final _purposeController = TextEditingController();
+  bool _isFormReady = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _leaderController.addListener(_updateSubmitState);
+    _membersController.addListener(_updateSubmitState);
+    _purposeController.addListener(_updateSubmitState);
+  }
 
   @override
   void dispose() {
@@ -23,6 +32,16 @@ class _LabRentalFormPageState extends ConsumerState<LabRentalFormPage> {
     _membersController.dispose();
     _purposeController.dispose();
     super.dispose();
+  }
+
+  void _updateSubmitState() {
+    final isReady =
+        _leaderController.text.trim().isNotEmpty &&
+        _membersController.text.trim().isNotEmpty &&
+        _purposeController.text.trim().isNotEmpty;
+    if (_isFormReady != isReady) {
+      setState(() => _isFormReady = isReady);
+    }
   }
 
   void _submit() {
@@ -164,9 +183,11 @@ class _LabRentalFormPageState extends ConsumerState<LabRentalFormPage> {
               SizedBox(
                 height: 54,
                 child: FilledButton(
-                  onPressed: _submit,
+                  onPressed: _isFormReady ? _submit : null,
                   style: FilledButton.styleFrom(
                     backgroundColor: GoneColors.primary,
+                    disabledBackgroundColor: const Color(0xFFA5C2F5),
+                    disabledForegroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(13),
                     ),
@@ -249,6 +270,14 @@ class _InputField extends StatelessWidget {
         borderSide: const BorderSide(color: Color(0xFFD0D5DD)),
       ),
       focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: const BorderSide(color: Color(0xFFD0D5DD)),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: const BorderSide(color: Color(0xFFD0D5DD)),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
         borderSide: const BorderSide(color: Color(0xFFD0D5DD)),
       ),
