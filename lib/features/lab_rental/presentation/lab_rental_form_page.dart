@@ -131,8 +131,8 @@ class _LabRentalFormPageState extends ConsumerState<LabRentalFormPage> {
               const SizedBox(height: 10),
               _InputField(
                 controller: _membersController,
-                hint: '예) 3206김은찬, 3218정문경',
-                maxLines: 4,
+                hint: '사용 인원을 입력해주세요',
+                maxLines: 8,
                 validator: (value) {
                   final count =
                       value
@@ -155,7 +155,7 @@ class _LabRentalFormPageState extends ConsumerState<LabRentalFormPage> {
               _InputField(
                 controller: _purposeController,
                 hint: '실습실 사용 목적을 입력해주세요',
-                maxLines: 5,
+                maxLines: 8,
                 validator: (value) => value == null || value.trim().isEmpty
                     ? '사용 목적을 입력해주세요.'
                     : null,
@@ -200,7 +200,7 @@ class _FormLabel extends StatelessWidget {
       if (suffix != null) ...[
         const SizedBox(width: 9),
         Text(
-          suffix!,
+          '$suffix · 쉼표(,)로 구분해 입력해주세요.',
           style: const TextStyle(fontSize: 11, color: Color(0xFF667085)),
         ),
       ],
@@ -225,7 +225,8 @@ class _InputField extends StatelessWidget {
     controller: controller,
     validator: validator,
     maxLines: maxLines,
-    keyboardType: TextInputType.text,
+    minLines: maxLines == 1 ? 1 : maxLines,
+    keyboardType: maxLines == 1 ? TextInputType.text : TextInputType.multiline,
     textCapitalization: TextCapitalization.none,
     enableSuggestions: true,
     autocorrect: false,
