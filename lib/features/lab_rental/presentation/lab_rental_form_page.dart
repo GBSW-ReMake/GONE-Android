@@ -235,6 +235,8 @@ class _InputField extends StatelessWidget {
         : TextInputAction.newline,
     style: const TextStyle(fontSize: 13),
     decoration: InputDecoration(
+      filled: true,
+      fillColor: Colors.white,
       hintText: hint,
       hintStyle: const TextStyle(fontSize: 12, color: Color(0xFF98A2B3)),
       contentPadding: const EdgeInsets.all(17),
@@ -248,7 +250,7 @@ class _InputField extends StatelessWidget {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
-        borderSide: const BorderSide(color: GoneColors.primary, width: 2),
+        borderSide: const BorderSide(color: Color(0xFFD0D5DD)),
       ),
     ),
   );
