@@ -225,6 +225,10 @@ class _InputField extends StatelessWidget {
     controller: controller,
     validator: validator,
     maxLines: maxLines,
+    keyboardType: TextInputType.text,
+    textCapitalization: TextCapitalization.none,
+    enableSuggestions: true,
+    autocorrect: false,
     textInputAction: maxLines == 1
         ? TextInputAction.next
         : TextInputAction.newline,

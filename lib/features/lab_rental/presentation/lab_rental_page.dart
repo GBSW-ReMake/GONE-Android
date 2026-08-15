@@ -9,7 +9,9 @@ import 'lab_rental_form_page.dart';
 import 'my_lab_rental_page.dart';
 
 class LabRentalPage extends ConsumerWidget {
-  const LabRentalPage({super.key});
+  const LabRentalPage({super.key, this.showBottomNavigation = true});
+
+  final bool showBottomNavigation;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +25,9 @@ class LabRentalPage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF3F5F9),
       body: SafeArea(child: const _LabRoomsView()),
-      bottomNavigationBar: const _LabBottomNavigation(),
+      bottomNavigationBar: showBottomNavigation
+          ? const _LabBottomNavigation()
+          : null,
     );
   }
 }
