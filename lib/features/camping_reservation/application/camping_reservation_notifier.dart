@@ -88,6 +88,8 @@ class CampingReservationNotifier extends Notifier<CampingReservationState> {
     state = state.copyWith(teacher: teacher);
   }
 
+  void clearTeacher() => state = state.copyWith(clearTeacher: true);
+
   void addStudent(Participant student) {
     if (student.role != ParticipantRole.student ||
         state.students.length >= _maxParticipants ||
