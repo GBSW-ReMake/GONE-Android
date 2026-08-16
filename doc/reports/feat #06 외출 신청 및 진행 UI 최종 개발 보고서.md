@@ -4,6 +4,7 @@
 > **작업 번호**: #06  
 > **관련 이슈**: [#11](https://github.com/GBSW-ReMake/GONE-Android/issues/11)  
 > **브랜치**: `feat/11-outing-flow`
+> **Pull Request**: [#12](https://github.com/GBSW-ReMake/GONE-Android/pull/12)
 
 ## 구현 내용
 
