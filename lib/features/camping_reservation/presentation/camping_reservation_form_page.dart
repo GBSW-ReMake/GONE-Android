@@ -53,13 +53,6 @@ class CampingReservationFormPage extends ConsumerWidget {
               onTap: () =>
                   _openSearchSheet(context, ref, ParticipantRole.teacher),
             ),
-            if (state.teacher != null) ...[
-              const SizedBox(height: 10),
-              _PersonChip(
-                participant: state.teacher!,
-                onDeleted: controller.clearTeacher,
-              ),
-            ],
             const SizedBox(height: 25),
             Row(
               children: [
@@ -224,7 +217,7 @@ class _PersonChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.fromLTRB(14, 11, 7, 11),
+    padding: const EdgeInsets.fromLTRB(14, 7, 7, 7),
     decoration: BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.circular(14),
@@ -237,15 +230,16 @@ class _PersonChip extends StatelessWidget {
           participant.id,
           style: const TextStyle(fontWeight: FontWeight.w700),
         ),
-        const SizedBox(width: 16),
+        const SizedBox(width: 14),
         Text(
           participant.name,
           style: const TextStyle(fontWeight: FontWeight.w600),
         ),
         IconButton(
           onPressed: onDeleted,
-          icon: const Icon(Icons.close, size: 18, color: Color(0xFF98A2B3)),
-          visualDensity: VisualDensity.compact,
+          icon: const Icon(Icons.close, size: 16, color: Color(0xFF98A2B3)),
+          padding: const EdgeInsets.all(4),
+          constraints: const BoxConstraints.tightFor(width: 28, height: 28),
           tooltip: '${participant.name} 삭제',
         ),
       ],
@@ -266,7 +260,7 @@ class _AddPersonButton extends StatelessWidget {
       onTap: enabled ? onTap : null,
       borderRadius: BorderRadius.circular(14),
       child: Ink(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
