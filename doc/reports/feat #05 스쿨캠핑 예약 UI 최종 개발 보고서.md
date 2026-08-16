@@ -4,7 +4,7 @@
 > **작업 번호**: #05  
 > **관련 이슈**: [#9](https://github.com/GBSW-ReMake/GONE-Android/issues/9)  
 > **브랜치**: `feat/9-camping-reservation`  
-> **PR**: 생성 후 링크 반영
+> **PR**: [#10](https://github.com/GBSW-ReMake/GONE-Android/pull/10)
 
 ## 구현 요약
 
