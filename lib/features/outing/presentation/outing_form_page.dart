@@ -158,6 +158,7 @@ class _OutingFormPageState extends ConsumerState<OutingFormPage> {
                 style: FilledButton.styleFrom(
                   backgroundColor: GoneColors.primary,
                   disabledBackgroundColor: const Color(0xFFA5C2F5),
+                  disabledForegroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
                   ),

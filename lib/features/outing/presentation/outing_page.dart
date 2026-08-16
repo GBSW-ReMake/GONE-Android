@@ -72,13 +72,13 @@ class _OutingOverviewPage extends ConsumerWidget {
               const SizedBox(height: 25),
               const Text(
                 '외출이 필요한가요?',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 8),
               const Text(
                 '외출 날짜와 시간을 입력해 담당 선생님께\n승인을 요청할 수 있습니다.',
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 13,
                   height: 1.5,
                   color: Color(0xFF667085),
                 ),
@@ -142,23 +142,23 @@ class _RequestedOutingOverview extends StatelessWidget {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
               ),
             ),
-            const SizedBox(height: 74),
+            const SizedBox(height: 40),
             const Text(
               '외출 신청',
               style: TextStyle(fontSize: 27, fontWeight: FontWeight.w700),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             const Text(
               '이번 주 안에서만 신청할 수 있으며, 시간이 겹치지 않으면\n여러 건을 신청할 수 있어요.',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 15,
                 height: 1.45,
                 color: Color(0xFF667085),
               ),
             ),
-            const SizedBox(height: 28),
+            const SizedBox(height: 20),
             _OutingRequestCard(request: request, onTap: onShowDetail),
-            const SizedBox(height: 28),
+            const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
               height: 54,
@@ -196,7 +196,7 @@ class _OutingRequestCard extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(20),
         child: Ink(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
+          padding: const EdgeInsets.fromLTRB(18, 16, 18, 14),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
@@ -206,36 +206,37 @@ class _OutingRequestCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const _StatusBadge(label: '승인 요청', color: GoneColors.warning),
-              const SizedBox(height: 20),
+              const SizedBox(height: 14),
               Text(
                 '${request.date.month}월 ${request.date.day}일 외출',
                 style: const TextStyle(
-                  fontSize: 17,
+                  fontSize: 15,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               Text(
                 request.timeRange.label,
                 style: const TextStyle(
-                  fontSize: 22,
+                  fontSize: 19,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 9),
               Text(
                 request.reason,
-                style: const TextStyle(color: Color(0xFF667085)),
+                style: const TextStyle(fontSize: 13, color: Color(0xFF667085)),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 7),
               Text(
                 '담당: ${request.teacher.label}',
-                style: const TextStyle(color: Color(0xFF667085)),
+                style: const TextStyle(fontSize: 13, color: Color(0xFF667085)),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 11),
               const Text(
                 '신청 취소',
                 style: TextStyle(
+                  fontSize: 13,
                   color: GoneColors.error,
                   fontWeight: FontWeight.w700,
                 ),
@@ -259,80 +260,87 @@ class _OutingDetailPage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: ListView(
+        child: Padding(
           padding: const EdgeInsets.fromLTRB(28, 18, 28, 28),
-          children: [
-            _TopBar(
-              title: '외출 상세',
-              onBack: controller.showOverview,
-              action: state.isWaitingApproval ? '수정' : null,
-              onAction: controller.showForm,
-            ),
-            const SizedBox(height: 58),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: _StatusBadge(
-                label: state.isWaitingApproval ? '승인 요청' : '승인 완료',
-                color: state.isWaitingApproval
-                    ? GoneColors.warning
-                    : GoneColors.success,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _TopBar(
+                title: '외출 상세',
+                onBack: controller.showOverview,
+                action: state.isWaitingApproval ? '수정' : null,
+                onAction: controller.showForm,
               ),
-            ),
-            const SizedBox(height: 42),
-            RichText(
-              text: const TextSpan(
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF1F2937),
+              const SizedBox(height: 30),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: _StatusBadge(
+                  label: state.isWaitingApproval ? '승인 요청' : '승인 완료',
+                  color: state.isWaitingApproval
+                      ? GoneColors.warning
+                      : GoneColors.success,
                 ),
-                children: [
-                  TextSpan(text: '3206 '),
-                  TextSpan(
-                    text: '김은찬',
-                    style: TextStyle(color: GoneColors.primary),
-                  ),
-                  TextSpan(text: ' 외출'),
-                ],
               ),
-            ),
-            const SizedBox(height: 38),
-            _DetailItem(label: '학적 정보', value: '3206'),
-            _DetailItem(
-              label: '날짜',
-              value: '${request.date.month}월 ${request.date.day}일',
-            ),
-            _DetailItem(label: '시간', value: request.timeRange.label),
-            _DetailItem(label: '사유', value: request.reason),
-            _DetailItem(label: '지정 선생님', value: request.teacher.label),
-            const SizedBox(height: 36),
-            if (state.isWaitingApproval) ...[
-              SizedBox(
-                width: double.infinity,
-                height: 48,
-                child: OutlinedButton(
-                  onPressed: controller.cancel,
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: GoneColors.error,
-                    side: const BorderSide(color: GoneColors.error),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+              const SizedBox(height: 26),
+              RichText(
+                text: const TextSpan(
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF1F2937),
+                  ),
+                  children: [
+                    TextSpan(text: '3206 '),
+                    TextSpan(
+                      text: '김은찬',
+                      style: TextStyle(color: GoneColors.primary),
                     ),
-                  ),
-                  child: const Text('신청 취소'),
+                    TextSpan(text: ' 외출'),
+                  ],
                 ),
               ),
-              const SizedBox(height: 10),
-              TextButton(
-                onPressed: controller.approveForPreview,
-                child: const Text('승인 상태 미리보기'),
+              const SizedBox(height: 22),
+              _DetailItem(label: '학적 정보', value: '3206'),
+              _DetailItem(
+                label: '날짜',
+                value: '${request.date.month}월 ${request.date.day}일',
               ),
-            ] else
-              FilledButton(
-                onPressed: controller.showProgress,
-                child: const Text('외출 진행 화면 보기'),
-              ),
-          ],
+              _DetailItem(label: '시간', value: request.timeRange.label),
+              _DetailItem(label: '사유', value: request.reason),
+              _DetailItem(label: '지정 선생님', value: request.teacher.label),
+              const Spacer(),
+              if (state.isWaitingApproval) ...[
+                SizedBox(
+                  width: double.infinity,
+                  height: 48,
+                  child: OutlinedButton(
+                    onPressed: controller.cancel,
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: GoneColors.error,
+                      side: const BorderSide(color: GoneColors.error),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                    child: const Text('신청 취소'),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: controller.approveForPreview,
+                  style: TextButton.styleFrom(
+                    minimumSize: const Size.fromHeight(30),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: const Text('승인 상태 미리보기'),
+                ),
+              ] else
+                FilledButton(
+                  onPressed: controller.showProgress,
+                  child: const Text('외출 진행 화면 보기'),
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -353,6 +361,7 @@ class _OutingProgressPage extends ConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(28, 30, 28, 28),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
                 '외출',
@@ -467,21 +476,27 @@ class _HoldActionButtonState extends State<_HoldActionButton> {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            CircularProgressIndicator(
-              value: _elapsed / 1500,
-              strokeWidth: 6,
-              color: widget.color,
-              backgroundColor: const Color(0xFFE4E7EC),
-            ),
-            Center(
-              child: Text(
-                widget.label,
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w700,
-                  color: widget.color,
+            DecoratedBox(
+              decoration: BoxDecoration(
+                color: widget.color,
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(
+                  widget.label,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
                 ),
               ),
+            ),
+            CircularProgressIndicator(
+              value: _elapsed / 1500,
+              strokeWidth: 5,
+              color: Colors.white,
+              backgroundColor: Colors.transparent,
             ),
           ],
         ),
@@ -573,18 +588,18 @@ class _DetailItem extends StatelessWidget {
   final String value;
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(bottom: 24),
+    padding: const EdgeInsets.only(bottom: 15),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 13, color: Color(0xFF667085)),
+          style: const TextStyle(fontSize: 12, color: Color(0xFF667085)),
         ),
-        const SizedBox(height: 7),
+        const SizedBox(height: 5),
         Text(
           value,
-          style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
         ),
       ],
     ),
