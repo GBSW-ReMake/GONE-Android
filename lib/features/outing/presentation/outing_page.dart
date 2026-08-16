@@ -359,38 +359,34 @@ class _OutingProgressPage extends ConsumerWidget {
       backgroundColor: const Color(0xFFF3F5F9),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(28, 30, 28, 28),
+          padding: const EdgeInsets.fromLTRB(24, 0, 24, 28),
           child: SizedBox(
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  '외출',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                ),
-                const Spacer(flex: 2),
+                const SizedBox(height: 66),
                 Text(
                   outing ? '남은 시간' : '복귀 시간',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 21,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 10),
                 Text(
                   outing
                       ? '30분'
                       : state.request!.timeRange.label.split(' ~ ').last,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 29,
+                    fontSize: 38,
                     fontWeight: FontWeight.w700,
                     color: outing ? GoneColors.warning : GoneColors.primary,
                   ),
                 ),
-                const SizedBox(height: 48),
+                const SizedBox(height: 64),
                 _HoldActionButton(
                   label: outing ? '외출 종료' : '외출 시작',
                   color: outing ? GoneColors.error : GoneColors.primary,
@@ -398,14 +394,14 @@ class _OutingProgressPage extends ConsumerWidget {
                       ? controller.endOuting
                       : controller.startOuting,
                 ),
-                const SizedBox(height: 28),
+                const SizedBox(height: 48),
                 Text(
                   outing
                       ? '현재 위치와 이동 경로를\n선도부 학생에게 실시간으로 공유하고 있습니다.'
                       : '버튼을 1.5초간 길게 눌러\n외출을 시작해 주세요.',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontSize: 13,
+                    fontSize: 14,
                     height: 1.5,
                     color: Color(0xFF667085),
                   ),
@@ -477,8 +473,8 @@ class _HoldActionButtonState extends State<_HoldActionButton> {
       onTapUp: (_) => _cancel(),
       onTapCancel: _cancel,
       child: SizedBox(
-        width: 132,
-        height: 132,
+        width: 166,
+        height: 166,
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -491,7 +487,7 @@ class _HoldActionButtonState extends State<_HoldActionButton> {
                 child: Text(
                   widget.label,
                   style: const TextStyle(
-                    fontSize: 17,
+                    fontSize: 19,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
