@@ -142,16 +142,16 @@ class _RequestedOutingOverview extends StatelessWidget {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
               ),
             ),
-            const Spacer(flex: 2),
+            const SizedBox(height: 74),
             const Text(
               '외출 신청',
               style: TextStyle(fontSize: 27, fontWeight: FontWeight.w700),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 16),
             const Text(
               '이번 주 안에서만 신청할 수 있으며, 시간이 겹치지 않으면\n여러 건을 신청할 수 있어요.',
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 16,
                 height: 1.45,
                 color: Color(0xFF667085),
               ),
@@ -257,7 +257,7 @@ class _OutingDetailPage extends ConsumerWidget {
     final request = state.request!;
     final controller = ref.read(outingProvider.notifier);
     return Scaffold(
-      backgroundColor: const Color(0xFFF3F5F9),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(28, 18, 28, 28),
@@ -268,28 +268,35 @@ class _OutingDetailPage extends ConsumerWidget {
               action: state.isWaitingApproval ? '수정' : null,
               onAction: controller.showForm,
             ),
-            const SizedBox(height: 44),
-            _StatusBadge(
-              label: state.isWaitingApproval ? '승인 요청' : '승인 완료',
-              color: state.isWaitingApproval
-                  ? GoneColors.warning
-                  : GoneColors.success,
-            ),
-            const SizedBox(height: 28),
-            const Text(
-              '3206 ',
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
-              textAlign: TextAlign.left,
-            ),
-            const Text(
-              '김은찬 외출',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
-                color: GoneColors.primary,
+            const SizedBox(height: 58),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: _StatusBadge(
+                label: state.isWaitingApproval ? '승인 요청' : '승인 완료',
+                color: state.isWaitingApproval
+                    ? GoneColors.warning
+                    : GoneColors.success,
               ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 42),
+            RichText(
+              text: const TextSpan(
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF1F2937),
+                ),
+                children: [
+                  TextSpan(text: '3206 '),
+                  TextSpan(
+                    text: '김은찬',
+                    style: TextStyle(color: GoneColors.primary),
+                  ),
+                  TextSpan(text: ' 외출'),
+                ],
+              ),
+            ),
+            const SizedBox(height: 38),
             _DetailItem(label: '학적 정보', value: '3206'),
             _DetailItem(
               label: '날짜',
@@ -298,15 +305,22 @@ class _OutingDetailPage extends ConsumerWidget {
             _DetailItem(label: '시간', value: request.timeRange.label),
             _DetailItem(label: '사유', value: request.reason),
             _DetailItem(label: '지정 선생님', value: request.teacher.label),
-            const SizedBox(height: 28),
+            const SizedBox(height: 36),
             if (state.isWaitingApproval) ...[
-              OutlinedButton(
-                onPressed: controller.cancel,
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: GoneColors.error,
-                  side: const BorderSide(color: GoneColors.error),
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: OutlinedButton(
+                  onPressed: controller.cancel,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: GoneColors.error,
+                    side: const BorderSide(color: GoneColors.error),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  child: const Text('신청 취소'),
                 ),
-                child: const Text('신청 취소'),
               ),
               const SizedBox(height: 10),
               TextButton(
@@ -488,24 +502,50 @@ class _TopBar extends StatelessWidget {
   final String? action;
   final VoidCallback? onAction;
   @override
-  Widget build(BuildContext context) => Row(
-    children: [
-      IconButton(onPressed: onBack, icon: const Icon(Icons.arrow_back_ios_new)),
-      Expanded(
-        child: Center(
-          child: Text(
-            title,
-            style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
+  Widget build(BuildContext context) => SizedBox(
+    height: 58,
+    child: Row(
+      children: [
+        InkWell(
+          onTap: onBack,
+          borderRadius: BorderRadius.circular(29),
+          child: Ink(
+            width: 58,
+            height: 58,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: const Color(0xFFDCE1E8)),
+            ),
+            child: const Icon(Icons.arrow_back_ios_new, size: 25),
           ),
         ),
-      ),
-      SizedBox(
-        width: 48,
-        child: action == null
-            ? null
-            : TextButton(onPressed: onAction, child: Text(action!)),
-      ),
-    ],
+        Expanded(
+          child: Center(
+            child: Text(
+              title,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 78,
+          height: 54,
+          child: action == null
+              ? null
+              : OutlinedButton(
+                  onPressed: onAction,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: GoneColors.primary,
+                    side: const BorderSide(color: Color(0xFFDCE1E8)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(27),
+                    ),
+                  ),
+                  child: Text(action!),
+                ),
+        ),
+      ],
+    ),
   );
 }
 

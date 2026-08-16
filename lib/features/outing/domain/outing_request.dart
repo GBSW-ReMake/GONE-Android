@@ -25,7 +25,9 @@ class OutingTimeRange {
   static String _format(int minute) {
     final hour = minute ~/ 60;
     final minutes = minute % 60;
-    return '${hour.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}';
+    final period = hour < 12 ? '오전' : '오후';
+    final displayHour = hour % 12 == 0 ? 12 : hour % 12;
+    return '$period $displayHour:${minutes.toString().padLeft(2, '0')}';
   }
 }
 
