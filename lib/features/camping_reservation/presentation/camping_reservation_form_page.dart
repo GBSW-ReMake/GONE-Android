@@ -216,33 +216,36 @@ class _PersonChip extends StatelessWidget {
   final VoidCallback onDeleted;
 
   @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.fromLTRB(14, 7, 7, 7),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(14),
-      border: Border.all(color: const Color(0xFFD0D5DD)),
-    ),
-    child: Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          participant.id,
-          style: const TextStyle(fontWeight: FontWeight.w700),
-        ),
-        const SizedBox(width: 14),
-        Text(
-          participant.name,
-          style: const TextStyle(fontWeight: FontWeight.w600),
-        ),
-        IconButton(
-          onPressed: onDeleted,
-          icon: const Icon(Icons.close, size: 16, color: Color(0xFF98A2B3)),
-          padding: const EdgeInsets.all(4),
-          constraints: const BoxConstraints.tightFor(width: 28, height: 28),
-          tooltip: '${participant.name} 삭제',
-        ),
-      ],
+  Widget build(BuildContext context) => SizedBox(
+    height: 44,
+    child: Container(
+      padding: const EdgeInsets.only(left: 14, right: 7),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0xFFD0D5DD)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            participant.id,
+            style: const TextStyle(fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(width: 14),
+          Text(
+            participant.name,
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
+          IconButton(
+            onPressed: onDeleted,
+            icon: const Icon(Icons.close, size: 16, color: Color(0xFF98A2B3)),
+            padding: const EdgeInsets.all(4),
+            constraints: const BoxConstraints.tightFor(width: 28, height: 28),
+            tooltip: '${participant.name} 삭제',
+          ),
+        ],
+      ),
     ),
   );
 }
@@ -259,28 +262,31 @@ class _AddPersonButton extends StatelessWidget {
     child: InkWell(
       onTap: enabled ? onTap : null,
       borderRadius: BorderRadius.circular(14),
-      child: Ink(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(
-            color: const Color(0xFF7D90B3),
-            style: BorderStyle.solid,
-          ),
-        ),
-        child: const Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.add, color: Color(0xFF667085)),
-            SizedBox(width: 8),
-            Text(
-              '인원 추가',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF667085),
-              ),
+      child: SizedBox(
+        height: 44,
+        child: Ink(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: const Color(0xFF7D90B3),
+              style: BorderStyle.solid,
             ),
-          ],
+          ),
+          child: const Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.add, color: Color(0xFF667085)),
+              SizedBox(width: 8),
+              Text(
+                '인원 추가',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF667085),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     ),
