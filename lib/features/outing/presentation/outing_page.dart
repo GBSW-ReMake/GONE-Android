@@ -360,58 +360,64 @@ class _OutingProgressPage extends ConsumerWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(28, 30, 28, 28),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                '외출',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-              ),
-              const Spacer(flex: 2),
-              Text(
-                outing ? '남은 시간' : '복귀 시간',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
+          child: SizedBox(
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  '외출',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                outing
-                    ? '30분'
-                    : state.request!.timeRange.label.split(' ~ ').last,
-                style: TextStyle(
-                  fontSize: 29,
-                  fontWeight: FontWeight.w700,
-                  color: outing ? GoneColors.warning : GoneColors.primary,
+                const Spacer(flex: 2),
+                Text(
+                  outing ? '남은 시간' : '복귀 시간',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 48),
-              _HoldActionButton(
-                label: outing ? '외출 종료' : '외출 시작',
-                color: outing ? GoneColors.error : GoneColors.primary,
-                onCompleted: outing
-                    ? controller.endOuting
-                    : controller.startOuting,
-              ),
-              const SizedBox(height: 28),
-              Text(
-                outing
-                    ? '현재 위치와 이동 경로를\n선도부 학생에게 실시간으로 공유하고 있습니다.'
-                    : '버튼을 1.5초간 길게 눌러\n외출을 시작해 주세요.',
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 13,
-                  height: 1.5,
-                  color: Color(0xFF667085),
+                const SizedBox(height: 8),
+                Text(
+                  outing
+                      ? '30분'
+                      : state.request!.timeRange.label.split(' ~ ').last,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 29,
+                    fontWeight: FontWeight.w700,
+                    color: outing ? GoneColors.warning : GoneColors.primary,
+                  ),
                 ),
-              ),
-              const Spacer(flex: 3),
-              const Text(
-                '위치 공유는 실제 서버 연동 전 목 상태로 표시됩니다.',
-                style: TextStyle(fontSize: 11, color: Color(0xFF98A2B3)),
-              ),
-            ],
+                const SizedBox(height: 48),
+                _HoldActionButton(
+                  label: outing ? '외출 종료' : '외출 시작',
+                  color: outing ? GoneColors.error : GoneColors.primary,
+                  onCompleted: outing
+                      ? controller.endOuting
+                      : controller.startOuting,
+                ),
+                const SizedBox(height: 28),
+                Text(
+                  outing
+                      ? '현재 위치와 이동 경로를\n선도부 학생에게 실시간으로 공유하고 있습니다.'
+                      : '버튼을 1.5초간 길게 눌러\n외출을 시작해 주세요.',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    height: 1.5,
+                    color: Color(0xFF667085),
+                  ),
+                ),
+                const Spacer(flex: 3),
+                const Text(
+                  '위치 공유는 실제 서버 연동 전 목 상태로 표시됩니다.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 11, color: Color(0xFF98A2B3)),
+                ),
+              ],
+            ),
           ),
         ),
       ),
