@@ -35,38 +35,56 @@ class _OutingOverviewPage extends ConsumerWidget {
       backgroundColor: const Color(0xFFF3F5F9),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(28, 30, 28, 24),
+          padding: const EdgeInsets.fromLTRB(24, 38, 24, 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Center(
-                child: Text(
-                  '외출',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+              const Text(
+                '외출',
+                style: TextStyle(fontSize: 11, color: Color(0xFF667085)),
+              ),
+              const SizedBox(height: 10),
+              RichText(
+                text: TextSpan(
+                  style: const TextStyle(
+                    fontSize: 23,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF1F2937),
+                    letterSpacing: -0.6,
+                  ),
+                  children: [
+                    TextSpan(
+                      text:
+                          '${state.selectedDate.month}월 ${state.selectedDate.day}일 ',
+                      style: const TextStyle(color: GoneColors.primary),
+                    ),
+                    const TextSpan(text: '외출 신청'),
+                  ],
                 ),
               ),
-              const Spacer(flex: 2),
+              const SizedBox(height: 25),
               const Text(
-                '외출 신청',
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700),
+                '외출이 필요한가요?',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
               const Text(
-                '이번 주 안에서만 신청할 수 있으며, 시간이 겹치지 않으면 여러 건을 신청할 수 있어요.',
+                '외출 날짜와 시간을 입력해 담당 선생님께\n승인을 요청할 수 있습니다.',
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 12,
                   height: 1.5,
                   color: Color(0xFF667085),
                 ),
               ),
-              const SizedBox(height: 28),
+              const SizedBox(height: 18),
               if (state.request == null)
                 Expanded(
                   child: Center(
                     child: Image.asset(
-                      'assets/images/home-outing.png',
-                      width: 156,
-                      height: 156,
+                      'assets/images/outing-apply-illustration.png',
+                      width: 250,
+                      height: 270,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 )
