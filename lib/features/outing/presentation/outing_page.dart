@@ -31,6 +31,13 @@ class _OutingOverviewPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(outingProvider);
     final controller = ref.read(outingProvider.notifier);
+    if (state.request != null) {
+      return _RequestedOutingOverview(
+        request: state.request!,
+        onShowDetail: controller.showDetail,
+        onShowForm: controller.showForm,
+      );
+    }
     return Scaffold(
       backgroundColor: const Color(0xFFF3F5F9),
       body: SafeArea(
@@ -77,24 +84,16 @@ class _OutingOverviewPage extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 18),
-              if (state.request == null)
-                Expanded(
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/outing-apply-illustration.png',
-                      width: 250,
-                      height: 270,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                )
-              else
-                Expanded(
-                  child: _OutingRequestCard(
-                    request: state.request!,
-                    onTap: controller.showDetail,
+              Expanded(
+                child: Center(
+                  child: Image.asset(
+                    'assets/images/outing-apply-illustration.png',
+                    width: 250,
+                    height: 270,
+                    fit: BoxFit.contain,
                   ),
                 ),
+              ),
               SizedBox(
                 width: double.infinity,
                 height: 54,
@@ -106,7 +105,7 @@ class _OutingOverviewPage extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(14),
                     ),
                   ),
-                  child: Text(state.request == null ? '외출 신청' : '새 외출 신청'),
+                  child: const Text('외출 신청'),
                 ),
               ),
             ],
@@ -115,6 +114,71 @@ class _OutingOverviewPage extends ConsumerWidget {
       ),
     );
   }
+}
+
+class _RequestedOutingOverview extends StatelessWidget {
+  const _RequestedOutingOverview({
+    required this.request,
+    required this.onShowDetail,
+    required this.onShowForm,
+  });
+
+  final OutingRequest request;
+  final VoidCallback onShowDetail;
+  final VoidCallback onShowForm;
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    backgroundColor: const Color(0xFFF3F5F9),
+    body: SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(28, 30, 28, 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Center(
+              child: Text(
+                '외출',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+              ),
+            ),
+            const Spacer(flex: 2),
+            const Text(
+              '외출 신청',
+              style: TextStyle(fontSize: 27, fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 14),
+            const Text(
+              '이번 주 안에서만 신청할 수 있으며, 시간이 겹치지 않으면\n여러 건을 신청할 수 있어요.',
+              style: TextStyle(
+                fontSize: 14,
+                height: 1.45,
+                color: Color(0xFF667085),
+              ),
+            ),
+            const SizedBox(height: 28),
+            _OutingRequestCard(request: request, onTap: onShowDetail),
+            const SizedBox(height: 28),
+            SizedBox(
+              width: double.infinity,
+              height: 54,
+              child: FilledButton(
+                onPressed: onShowForm,
+                style: FilledButton.styleFrom(
+                  backgroundColor: GoneColors.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
+                child: const Text('외출 신청'),
+              ),
+            ),
+            const Spacer(),
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
 class _OutingRequestCard extends StatelessWidget {
@@ -126,41 +190,58 @@ class _OutingRequestCard extends StatelessWidget {
   Widget build(BuildContext context) => Semantics(
     button: true,
     label: '외출 신청 상세 보기',
-    child: InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
-      child: Ink(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const _StatusBadge(label: '승인 요청', color: GoneColors.warning),
-            const SizedBox(height: 20),
-            Text(
-              '${request.date.month}월 ${request.date.day}일 외출',
-              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              request.timeRange.label,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              request.reason,
-              style: const TextStyle(color: Color(0xFF667085)),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              '담당: ${request.teacher.label}',
-              style: const TextStyle(color: Color(0xFF667085)),
-            ),
-          ],
+    child: SizedBox(
+      width: double.infinity,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Ink(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const _StatusBadge(label: '승인 요청', color: GoneColors.warning),
+              const SizedBox(height: 20),
+              Text(
+                '${request.date.month}월 ${request.date.day}일 외출',
+                style: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                request.timeRange.label,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                request.reason,
+                style: const TextStyle(color: Color(0xFF667085)),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                '담당: ${request.teacher.label}',
+                style: const TextStyle(color: Color(0xFF667085)),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                '신청 취소',
+                style: TextStyle(
+                  color: GoneColors.error,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     ),
