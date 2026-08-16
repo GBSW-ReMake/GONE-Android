@@ -78,6 +78,11 @@ class CampingReservationNotifier extends Notifier<CampingReservationState> {
   void showCalendar() =>
       state = state.copyWith(screen: CampingReservationScreen.calendar);
 
+  void showComplete() {
+    if (state.reservation == null) return;
+    state = state.copyWith(screen: CampingReservationScreen.complete);
+  }
+
   void selectTeacher(Participant teacher) {
     if (teacher.role != ParticipantRole.teacher) return;
     state = state.copyWith(teacher: teacher);
