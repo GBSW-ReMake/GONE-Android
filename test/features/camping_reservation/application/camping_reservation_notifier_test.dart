@@ -51,4 +51,20 @@ void main() {
     expect(state.teacher, isNull);
     expect(state.students, isEmpty);
   });
+
+  test('내 예약 날짜는 다시 선택할 수 없다', () {
+    final notifier = container.read(campingReservationProvider.notifier);
+    final reservedDate = DateTime(2026, 7, 29);
+    notifier.selectDate(reservedDate);
+    notifier.selectTeacher(mockTeachers.first);
+    notifier.addStudent(mockStudents.first);
+    notifier.submit();
+
+    notifier.showCalendar();
+    notifier.selectDate(reservedDate);
+
+    final state = container.read(campingReservationProvider);
+    expect(state.screen, CampingReservationScreen.calendar);
+    expect(state.isMyReservationDate(reservedDate), isTrue);
+  });
 }

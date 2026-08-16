@@ -24,6 +24,14 @@ class CampingReservationState {
   bool get canSubmit =>
       selectedDate != null && teacher != null && students.isNotEmpty;
 
+  bool isMyReservationDate(DateTime date) {
+    final reservedDate = reservation?.date;
+    return reservedDate != null &&
+        reservedDate.year == date.year &&
+        reservedDate.month == date.month &&
+        reservedDate.day == date.day;
+  }
+
   CampingReservationState copyWith({
     DateTime? displayedMonth,
     CampingReservationScreen? screen,
@@ -69,6 +77,7 @@ class CampingReservationNotifier extends Notifier<CampingReservationState> {
   }
 
   void selectDate(DateTime date) {
+    if (state.isMyReservationDate(date)) return;
     state = state.copyWith(
       selectedDate: date,
       screen: CampingReservationScreen.form,

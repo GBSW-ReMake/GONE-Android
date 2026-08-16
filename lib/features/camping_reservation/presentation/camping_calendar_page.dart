@@ -155,9 +155,13 @@ class _MonthGrid extends ConsumerWidget {
             return const _CalendarCell();
           }
           final date = DateTime(month.year, month.month, day);
+          final isMyReservation = ref
+              .read(campingReservationProvider)
+              .isMyReservationDate(date);
           return _CalendarCell(
             day: day,
-            onTap: () => controller.selectDate(date),
+            isMyReservation: isMyReservation,
+            onTap: isMyReservation ? null : () => controller.selectDate(date),
           );
         },
       ),
@@ -166,9 +170,10 @@ class _MonthGrid extends ConsumerWidget {
 }
 
 class _CalendarCell extends StatelessWidget {
-  const _CalendarCell({this.day, this.onTap});
+  const _CalendarCell({this.day, this.isMyReservation = false, this.onTap});
 
   final int? day;
+  final bool isMyReservation;
   final VoidCallback? onTap;
 
   @override
@@ -187,13 +192,43 @@ class _CalendarCell extends StatelessWidget {
             : Center(
                 child: Semantics(
                   button: true,
-                  label: '$day일 예약하기',
-                  child: Text(
-                    '$day',
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  enabled: !isMyReservation,
+                  label: isMyReservation ? '$day일 내 예약됨' : '$day일 예약하기',
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '$day',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: isMyReservation
+                              ? const Color(0xFF667085)
+                              : const Color(0xFF1F2937),
+                        ),
+                      ),
+                      if (isMyReservation) ...[
+                        const SizedBox(height: 4),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 3,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFE4E7EC),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: const Text(
+                            '예약됨',
+                            style: TextStyle(
+                              fontSize: 8,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF667085),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                 ),
               ),
