@@ -365,7 +365,7 @@ class _OutingProgressPage extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 66),
+                const SizedBox(height: 108),
                 Text(
                   outing ? '남은 시간' : '복귀 시간',
                   textAlign: TextAlign.center,
@@ -386,7 +386,7 @@ class _OutingProgressPage extends ConsumerWidget {
                     color: outing ? GoneColors.warning : GoneColors.primary,
                   ),
                 ),
-                const SizedBox(height: 64),
+                const SizedBox(height: 88),
                 _HoldActionButton(
                   label: outing ? '외출 종료' : '외출 시작',
                   color: outing ? GoneColors.error : GoneColors.primary,
@@ -394,7 +394,7 @@ class _OutingProgressPage extends ConsumerWidget {
                       ? controller.endOuting
                       : controller.startOuting,
                 ),
-                const SizedBox(height: 48),
+                const SizedBox(height: 58),
                 Text(
                   outing
                       ? '현재 위치와 이동 경로를\n선도부 학생에게 실시간으로 공유하고 있습니다.'
