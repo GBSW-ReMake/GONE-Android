@@ -22,7 +22,7 @@ class _SplashPageState extends State<SplashPage>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 360),
+      duration: const Duration(milliseconds: 440),
     );
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Future<void>.delayed(const Duration(milliseconds: 550));
@@ -51,7 +51,10 @@ class _SplashPageState extends State<SplashPage>
       body: Center(
         child: FadeTransition(
           opacity: Tween<double>(begin: 1, end: 0).animate(_controller),
-          child: const GoneLogo(width: 128),
+          child: ScaleTransition(
+            scale: Tween<double>(begin: 1, end: 0.64).animate(_controller),
+            child: const GoneLogo(width: 235),
+          ),
         ),
       ),
     );
