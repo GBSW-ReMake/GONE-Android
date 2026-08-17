@@ -22,10 +22,10 @@ class _SplashPageState extends State<SplashPage>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 440),
+      duration: const Duration(milliseconds: 760),
     );
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Future<void>.delayed(const Duration(milliseconds: 550));
+      await Future<void>.delayed(const Duration(milliseconds: 700));
       if (!mounted) return;
       if (MediaQuery.disableAnimationsOf(context)) {
         await _controller.animateTo(
@@ -47,12 +47,17 @@ class _SplashPageState extends State<SplashPage>
 
   @override
   Widget build(BuildContext context) {
+    final transition = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOutCubic,
+    );
+
     return Scaffold(
       body: Center(
         child: FadeTransition(
-          opacity: Tween<double>(begin: 1, end: 0).animate(_controller),
+          opacity: Tween<double>(begin: 1, end: 0).animate(transition),
           child: ScaleTransition(
-            scale: Tween<double>(begin: 1, end: 0.64).animate(_controller),
+            scale: Tween<double>(begin: 1, end: 0.64).animate(transition),
             child: const GoneLogo(width: 235),
           ),
         ),
