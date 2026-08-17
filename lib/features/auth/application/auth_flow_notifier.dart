@@ -44,6 +44,8 @@ class AuthFlowNotifier extends Notifier<AuthFlowState> {
   }
 
   void showHome() => state = state.copyWith(destination: AuthDestination.home);
+
+  void logout() => state = state.copyWith(destination: AuthDestination.roleSelection);
 }
 
 final authFlowProvider = NotifierProvider<AuthFlowNotifier, AuthFlowState>(
