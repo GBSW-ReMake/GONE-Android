@@ -18,9 +18,9 @@
 
 ## 완료 기준
 
-- [ ] 홈 화면 아이콘에서 GONE 로고가 잘리지 않고 선명하게 표시됩니다.
-- [ ] 모든 `mipmap-*` 해상도에 아이콘이 반영됩니다.
-- [ ] `flutter analyze` 및 Android debug APK 빌드가 통과합니다.
+- [x] 홈 화면 아이콘에서 GONE 로고가 잘리지 않고 선명하게 표시됩니다.
+- [x] 모든 `mipmap-*` 해상도에 아이콘이 반영됩니다.
+- [x] `flutter analyze` 및 Android debug APK 빌드가 통과합니다.
 
 > **개발자 검토 의견**
 > 승인 ✅
