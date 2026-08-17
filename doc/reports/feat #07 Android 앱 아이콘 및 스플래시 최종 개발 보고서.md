@@ -25,4 +25,4 @@
 
 ## Pull Request
 
-- 생성 후 링크를 반영합니다.
+- [#14 feat: GONE 앱 아이콘 및 스플래시 개선](https://github.com/GBSW-ReMake/GONE-Android/pull/14)
