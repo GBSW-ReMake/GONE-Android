@@ -1,6 +1,6 @@
 # Android 앱 아이콘 적용 계획서
 
-> **상태**: 승인됨  
+> **상태**: 완료  
 > **작성일**: 2026-08-17  
 > **작업 번호**: #07  
 > **관련 이슈**: [#13](https://github.com/GBSW-ReMake/GONE-Android/issues/13)  
