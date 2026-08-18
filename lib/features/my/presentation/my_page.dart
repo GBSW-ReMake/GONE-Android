@@ -133,16 +133,16 @@ class _AccountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
+    padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 17),
     decoration: BoxDecoration(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(19),
     ),
     child: Row(
       children: [
         Container(
-          width: 52,
-          height: 52,
+          width: 56,
+          height: 56,
           alignment: Alignment.center,
           decoration: const BoxDecoration(
             color: GoneColors.deepNavy,
@@ -152,12 +152,12 @@ class _AccountCard extends StatelessWidget {
             '김',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 22,
+              fontSize: 23,
               fontWeight: FontWeight.w700,
             ),
           ),
         ),
-        const SizedBox(width: 14),
+        const SizedBox(width: 15),
         const Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,7 +165,7 @@ class _AccountCard extends StatelessWidget {
               Text(
                 '김은찬',
                 style: TextStyle(
-                  fontSize: 19,
+                  fontSize: 20,
                   letterSpacing: -0.6,
                   fontWeight: FontWeight.w700,
                   color: GoneColors.deepNavy,
@@ -174,7 +174,7 @@ class _AccountCard extends StatelessWidget {
               SizedBox(height: 2),
               Text(
                 '소프트웨어개발과 · 2학년 2반 · 6번',
-                style: TextStyle(fontSize: 11, color: Color(0xFF667085)),
+                style: TextStyle(fontSize: 12, color: Color(0xFF667085)),
               ),
             ],
           ),
@@ -202,7 +202,7 @@ class _MenuCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(18),
       child: Ink(
-        height: 72,
+        height: 66,
         padding: const EdgeInsets.symmetric(horizontal: 18),
         decoration: BoxDecoration(
           color: Colors.white,
