@@ -4,10 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/design_system/gone_theme.dart';
 import '../../camping_reservation/presentation/camping_reservation_page.dart';
 import '../../lab_rental/presentation/lab_rental_page.dart';
+import '../../my/presentation/my_page.dart';
 import '../../outing/presentation/outing_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, this.onLogout});
+
+  final VoidCallback? onLogout;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -38,6 +41,8 @@ class _HomePageState extends State<HomePage> {
           ? const OutingPage()
           : _selectedTab == 3
           ? const CampingReservationPage(showBottomNavigation: false)
+          : _selectedTab == 4
+          ? MyPage(onLogout: widget.onLogout ?? () {})
           : SafeArea(
               child: _selectedTab == 0
                   ? _home()
@@ -376,13 +381,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _bottomNavigation() {
-    const labels = ['홈', '실습실', '외출', '스쿨캠핑', '설정'];
+    const labels = ['홈', '실습실', '외출', '스쿨캠핑', '마이'];
     const icons = [
       'home.svg',
       'lab.svg',
       'outing.svg',
       'camping.svg',
-      'settings.svg',
+      'my.svg',
     ];
     return SafeArea(
       top: false,
@@ -417,8 +422,8 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         SvgPicture.asset(
                           'assets/icons/${icons[index]}',
-                          width: 18,
-                          height: 18,
+                          width: index == 4 ? 22 : 18,
+                          height: index == 4 ? 22 : 18,
                           colorFilter: ColorFilter.mode(
                             selected
                                 ? GoneColors.primary

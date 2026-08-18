@@ -287,13 +287,13 @@ class _LabBottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const labels = ['홈', '실습실', '외출', '스쿨캠핑', '설정'];
+    const labels = ['홈', '실습실', '외출', '스쿨캠핑', '마이'];
     const icons = [
       'home.svg',
       'lab.svg',
       'outing.svg',
       'camping.svg',
-      'settings.svg',
+      'my.svg',
     ];
     return SafeArea(
       top: false,
