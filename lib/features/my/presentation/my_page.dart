@@ -31,68 +31,68 @@ class _MyPageState extends State<MyPage> {
     backgroundColor: const Color(0xFFF3F5F9),
     body: SafeArea(
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(26, 22, 26, 28),
+        padding: const EdgeInsets.fromLTRB(26, 20, 26, 24),
         children: [
           const Text(
             '마이',
-            style: TextStyle(fontSize: 13, color: Color(0xFF667085)),
+            style: TextStyle(fontSize: 12, color: Color(0xFF667085)),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 4),
           const Text(
             '계정 및 활동',
             style: TextStyle(
-              fontSize: 25,
+              fontSize: 23,
               height: 1.15,
               letterSpacing: -0.8,
               fontWeight: FontWeight.w700,
               color: GoneColors.deepNavy,
             ),
           ),
-          const SizedBox(height: 28),
+          const SizedBox(height: 22),
           const _AccountCard(),
-          const SizedBox(height: 24),
+          const SizedBox(height: 18),
           _MenuCard(
             icon: Icons.notifications_none_rounded,
             title: '알림 설정',
             onTap: () => _showNotice('알림 설정은 준비 중입니다.'),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           _MenuCard(
             icon: Icons.question_answer_outlined,
             title: '문의하기',
             onTap: () => _showNotice('문의하기는 준비 중입니다.'),
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 24),
           const Text(
             '최근 활동',
             style: TextStyle(
-              fontSize: 22,
+              fontSize: 20,
               letterSpacing: -0.6,
               fontWeight: FontWeight.w700,
               color: GoneColors.deepNavy,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           _ActivityFilterBar(
             selected: _filter,
             onSelected: (filter) => setState(() => _filter = filter),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           for (final activity in _activities) ...[
             _ActivityCard(activity: activity),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
           ],
-          const SizedBox(height: 8),
+          const SizedBox(height: 5),
           Center(
             child: TextButton(
               onPressed: _confirmLogout,
               style: TextButton.styleFrom(
                 foregroundColor: GoneColors.error,
-                minimumSize: const Size(110, 42),
+                minimumSize: const Size(104, 38),
               ),
               child: const Text(
                 '로그아웃',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
               ),
             ),
           ),
@@ -133,16 +133,16 @@ class _AccountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+    padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
     decoration: BoxDecoration(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(21),
+      borderRadius: BorderRadius.circular(18),
     ),
     child: Row(
       children: [
         Container(
-          width: 60,
-          height: 60,
+          width: 52,
+          height: 52,
           alignment: Alignment.center,
           decoration: const BoxDecoration(
             color: GoneColors.deepNavy,
@@ -152,12 +152,12 @@ class _AccountCard extends StatelessWidget {
             '김',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 25,
+              fontSize: 22,
               fontWeight: FontWeight.w700,
             ),
           ),
         ),
-        const SizedBox(width: 17),
+        const SizedBox(width: 14),
         const Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,16 +165,16 @@ class _AccountCard extends StatelessWidget {
               Text(
                 '김은찬',
                 style: TextStyle(
-                  fontSize: 21,
+                  fontSize: 19,
                   letterSpacing: -0.6,
                   fontWeight: FontWeight.w700,
                   color: GoneColors.deepNavy,
                 ),
               ),
-              SizedBox(height: 3),
+              SizedBox(height: 2),
               Text(
                 '소프트웨어개발과 · 2학년 2반 · 6번',
-                style: TextStyle(fontSize: 12, color: Color(0xFF667085)),
+                style: TextStyle(fontSize: 11, color: Color(0xFF667085)),
               ),
             ],
           ),
@@ -200,22 +200,22 @@ class _MenuCard extends StatelessWidget {
     label: title,
     child: InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(18),
       child: Ink(
-        height: 82,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        height: 72,
+        padding: const EdgeInsets.symmetric(horizontal: 18),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(18),
         ),
         child: Row(
           children: [
-            Icon(icon, size: 26, color: const Color(0xFF667085)),
-            const SizedBox(width: 19),
+            Icon(icon, size: 24, color: const Color(0xFF667085)),
+            const SizedBox(width: 16),
             Text(
               title,
               style: const TextStyle(
-                fontSize: 19,
+                fontSize: 17,
                 letterSpacing: -0.5,
                 fontWeight: FontWeight.w700,
                 color: GoneColors.deepNavy,
@@ -224,7 +224,7 @@ class _MenuCard extends StatelessWidget {
             const Spacer(),
             const Icon(
               Icons.chevron_right_rounded,
-              size: 28,
+              size: 25,
               color: Color(0xFF667085),
             ),
           ],
@@ -253,20 +253,20 @@ class _ActivityFilterBar extends StatelessWidget {
         children: filters.map((item) {
           final isSelected = selected == item.$1;
           return Padding(
-            padding: const EdgeInsets.only(right: 9),
+            padding: const EdgeInsets.only(right: 7),
             child: Semantics(
               button: true,
               selected: isSelected,
               label: '${item.$2} 활동 필터',
               child: InkWell(
                 onTap: () => onSelected(item.$1),
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(13),
                 child: Ink(
-                  height: 46,
-                  padding: const EdgeInsets.symmetric(horizontal: 17),
+                  height: 40,
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   decoration: BoxDecoration(
                     color: isSelected ? GoneColors.primary : Colors.white,
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(13),
                     border: isSelected
                         ? null
                         : Border.all(
@@ -278,7 +278,7 @@ class _ActivityFilterBar extends StatelessWidget {
                     child: Text(
                       item.$2,
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: isSelected
                             ? Colors.white
@@ -306,23 +306,23 @@ class _ActivityCard extends StatelessWidget {
     label: '${activity.title} 활동 보기',
     child: InkWell(
       onTap: () {},
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(18),
       child: Ink(
-        height: 114,
-        padding: const EdgeInsets.symmetric(horizontal: 17),
+        height: 98,
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(18),
         ),
         child: Row(
           children: [
             Image.asset(
               activity.image,
-              width: 44,
-              height: 44,
+              width: 39,
+              height: 39,
               fit: BoxFit.contain,
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 13),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -331,25 +331,25 @@ class _ActivityCard extends StatelessWidget {
                   Text(
                     activity.category,
                     style: const TextStyle(
-                      fontSize: 13,
+                      fontSize: 12,
                       color: Color(0xFF667085),
                     ),
                   ),
-                  const SizedBox(height: 3),
+                  const SizedBox(height: 2),
                   Text(
                     activity.title,
                     style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       letterSpacing: -0.5,
                       fontWeight: FontWeight.w700,
                       color: GoneColors.deepNavy,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 3),
                   Text(
                     activity.detail,
                     style: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 11,
                       color: Color(0xFF667085),
                     ),
                   ),
@@ -358,7 +358,7 @@ class _ActivityCard extends StatelessWidget {
             ),
             const Icon(
               Icons.chevron_right_rounded,
-              size: 27,
+              size: 24,
               color: Color(0xFF98A2B3),
             ),
           ],

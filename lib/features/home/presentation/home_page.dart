@@ -422,8 +422,8 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         SvgPicture.asset(
                           'assets/icons/${icons[index]}',
-                          width: 18,
-                          height: 18,
+                          width: index == 4 ? 22 : 18,
+                          height: index == 4 ? 22 : 18,
                           colorFilter: ColorFilter.mode(
                             selected
                                 ? GoneColors.primary
