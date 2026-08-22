@@ -218,33 +218,143 @@ class _IssueTab extends ConsumerWidget {
   void _pickStudent(BuildContext context, PointSystemNotifier controller) {
     showModalBottomSheet<void>(
       context: context,
+      isScrollControlled: true,
       backgroundColor: Colors.white,
-      showDragHandle: true,
-      builder: (sheetContext) => SafeArea(
-        child: ListView(
-          shrinkWrap: true,
-          children: mockPointStudents
-              .map(
-                (student) => ListTile(
-                  title: Text('${student.id} ${student.name}'),
-                  subtitle: Text(student.info),
-                  trailing: const Icon(
-                    Icons.add_circle,
-                    color: GoneColors.primary,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+      ),
+      builder: (sheetContext) => _StudentSearchSheet(
+        onSelected: (student) {
+          controller.addStudent(student);
+          Navigator.pop(sheetContext);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => PointIssueFormPage(student: student),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _StudentSearchSheet extends StatefulWidget {
+  const _StudentSearchSheet({required this.onSelected});
+
+  final ValueChanged<PointStudent> onSelected;
+
+  @override
+  State<_StudentSearchSheet> createState() => _StudentSearchSheetState();
+}
+
+class _StudentSearchSheetState extends State<_StudentSearchSheet> {
+  final _searchController = TextEditingController();
+  String _query = '';
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final query = _query.trim().toLowerCase();
+    final students = mockPointStudents.where((student) {
+      return query.isEmpty ||
+          student.id.contains(query) ||
+          student.name.toLowerCase().contains(query);
+    }).toList();
+
+    return SizedBox(
+      height: MediaQuery.sizeOf(context).height * .86,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 18, 24, 14),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  OutlinedButton(
+                    onPressed: () => Navigator.pop(context),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(76, 46),
+                      foregroundColor: GoneColors.primary,
+                      side: const BorderSide(color: Color(0xFFD8DEE8)),
+                      shape: const StadiumBorder(),
+                    ),
+                    child: const Text('닫기'),
                   ),
-                  onTap: () {
-                    controller.addStudent(student);
-                    Navigator.pop(sheetContext);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => PointIssueFormPage(student: student),
+                  const Expanded(
+                    child: Center(
+                      child: Text(
+                        '학생 검색',
+                        style: TextStyle(
+                          fontSize: 21,
+                          fontWeight: FontWeight.w800,
+                          color: GoneColors.deepNavy,
+                        ),
                       ),
+                    ),
+                  ),
+                  const SizedBox(width: 76),
+                ],
+              ),
+              const SizedBox(height: 28),
+              Expanded(
+                child: ListView.separated(
+                  padding: EdgeInsets.zero,
+                  itemCount: students.length,
+                  separatorBuilder: (_, __) => const Divider(height: 1),
+                  itemBuilder: (_, index) {
+                    final student = students[index];
+                    return ListTile(
+                      contentPadding: const EdgeInsets.symmetric(vertical: 8),
+                      title: Text(
+                        '${student.id} ${student.name}',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      subtitle: const Text(
+                        '학생 추가',
+                        style: TextStyle(color: Color(0xFF667085)),
+                      ),
+                      trailing: const CircleAvatar(
+                        radius: 18,
+                        backgroundColor: GoneColors.primary,
+                        child: Icon(Icons.add, color: Colors.white, size: 22),
+                      ),
+                      onTap: () => widget.onSelected(student),
                     );
                   },
                 ),
-              )
-              .toList(),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: _searchController,
+                onChanged: (value) => setState(() => _query = value),
+                textInputAction: TextInputAction.search,
+                decoration: InputDecoration(
+                  hintText: '학번 또는 이름 검색',
+                  prefixIcon: const Icon(Icons.search, size: 30),
+                  filled: true,
+                  fillColor: const Color(0xFFF8F9FC),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(28),
+                    borderSide: const BorderSide(color: Color(0xFFD8DEE8)),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(28),
+                    borderSide: const BorderSide(color: Color(0xFFD8DEE8)),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
