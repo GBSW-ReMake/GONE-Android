@@ -260,7 +260,7 @@ class _EmptyIssueState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 112),
+        const SizedBox(height: 56),
         Image.asset('assets/images/point-plus.png', width: 104, height: 104),
         const SizedBox(height: 22),
         const Text(
