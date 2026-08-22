@@ -41,7 +41,18 @@ class _Tabs extends StatelessWidget { const _Tabs({required this.selected, requi
 
 class _IssueTab extends ConsumerWidget { const _IssueTab({required this.state}); final PointSystemState state;
   @override Widget build(BuildContext context, WidgetRef ref) { final c=ref.read(pointSystemProvider.notifier); return Column(crossAxisAlignment:CrossAxisAlignment.start, children:[
-    if(state.students.isEmpty) const Expanded(child: Center(child: Text('발급 대상자를 추가해 주세요', style: TextStyle(fontSize:20,fontWeight:FontWeight.w700,color:GoneColors.deepNavy)))) else Expanded(child: ListView(children:[const Text('발급 명단',style:TextStyle(fontSize:18,fontWeight:FontWeight.w800)),const SizedBox(height:12),...state.students.map((s)=>Card(child:ListTile(onTap:()=>Navigator.push(context,MaterialPageRoute(builder:(_)=>PointIssueFormPage(student:s))),title:Text(s.name,style:const TextStyle(fontWeight:FontWeight.w700)),subtitle:Text(s.info),trailing:IconButton(icon:const Icon(Icons.close),onPressed:()=>c.removeStudent(s))))])),
+    Expanded(child: state.students.isEmpty
+      ? const Center(child: Text('발급 대상자를 추가해 주세요', style: TextStyle(fontSize:20,fontWeight:FontWeight.w700,color:GoneColors.deepNavy)))
+      : ListView(children:[
+          const Text('발급 명단',style:TextStyle(fontSize:18,fontWeight:FontWeight.w800)),
+          const SizedBox(height:12),
+          ...state.students.map((s) => Card(child: ListTile(
+            onTap:()=>Navigator.push(context,MaterialPageRoute(builder:(_)=>PointIssueFormPage(student:s))),
+            title:Text(s.name,style:const TextStyle(fontWeight:FontWeight.w700)),
+            subtitle:Text(s.info),
+            trailing:IconButton(icon:const Icon(Icons.close),onPressed:()=>c.removeStudent(s)),
+          ))),
+        ])),
     OutlinedButton.icon(onPressed:()=>_pick(context,c),icon:const Icon(Icons.add),label:const Text('발급 대상자 추가'),style:OutlinedButton.styleFrom(minimumSize:const Size.fromHeight(50),foregroundColor:GoneColors.primary)),
     const SizedBox(height:12), Row(children:[OutlinedButton(onPressed:c.clear,child:const Text('전체 삭제')),const SizedBox(width:12),Expanded(child:FilledButton(onPressed:state.students.isEmpty?null:(){final records=c.issueAll();Navigator.push(context,MaterialPageRoute(builder:(_)=>PointIssueCompletePage(records:records)));},style:FilledButton.styleFrom(minimumSize:const Size.fromHeight(52),backgroundColor:GoneColors.primary),child:const Text('점수 발급')))])
   ]); }
