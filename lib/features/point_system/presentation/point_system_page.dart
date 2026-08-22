@@ -696,14 +696,14 @@ class _StatisticsTab extends StatelessWidget {
               suffix: '건',
               color: GoneColors.primary,
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 7),
             _StatCard(
               title: '발급한 상점',
               value: '$reward',
               suffix: '점',
               color: GoneColors.success,
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 7),
             _StatCard(
               title: '발급한 벌점',
               value: '$penalty',
@@ -760,7 +760,7 @@ class _StatCard extends StatelessWidget {
                 Text(
                   value,
                   style: TextStyle(
-                    fontSize: 36,
+                    fontSize: 32,
                     height: .9,
                     fontWeight: FontWeight.w800,
                     color: color,
