@@ -258,27 +258,33 @@ class _EmptyIssueState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 56),
-        Image.asset('assets/images/point-plus.png', width: 104, height: 104),
-        const SizedBox(height: 22),
-        const Text(
-          '발급 대상자를 추가해 주세요',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w800,
-            color: GoneColors.deepNavy,
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(height: 56),
+          Image.asset('assets/images/point-plus.png', width: 104, height: 104),
+          const SizedBox(height: 22),
+          const Text(
+            '발급 대상자를 추가해 주세요',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+              color: GoneColors.deepNavy,
+            ),
           ),
-        ),
-        const SizedBox(height: 8),
-        const Text(
-          '학생을 선택한 뒤 항목과 점수를 지정합니다.',
-          style: TextStyle(fontSize: 15, color: Color(0xFF667085)),
-        ),
-        const SizedBox(height: 26),
-        _AddTargetButton(onTap: onAdd, width: 280),
-      ],
+          const SizedBox(height: 8),
+          const Text(
+            '학생을 선택한 뒤 항목과 점수를 지정합니다.',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 15, color: Color(0xFF667085)),
+          ),
+          const SizedBox(height: 26),
+          _AddTargetButton(onTap: onAdd, width: 280),
+        ],
+      ),
     );
   }
 }
