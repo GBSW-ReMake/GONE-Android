@@ -36,7 +36,7 @@ class _PointSystemPageState extends ConsumerState<PointSystemPage> {
               const Text(
                 '상벌점 점수 발급',
                 style: TextStyle(
-                  fontSize: 26,
+                  fontSize: 24,
                   fontWeight: FontWeight.w800,
                   color: GoneColors.deepNavy,
                 ),
@@ -200,7 +200,8 @@ class _IssueTab extends ConsumerWidget {
                 style: FilledButton.styleFrom(
                   minimumSize: const Size.fromHeight(52),
                   backgroundColor: GoneColors.primary,
-                  disabledBackgroundColor: const Color(0xFFC7CBD2),
+                  disabledBackgroundColor: const Color(0xFFD4D7DD),
+                  disabledForegroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
                   ),
@@ -276,21 +277,22 @@ class _EmptyIssueState extends StatelessWidget {
           style: TextStyle(fontSize: 15, color: Color(0xFF667085)),
         ),
         const SizedBox(height: 26),
-        _AddTargetButton(onTap: onAdd),
+        _AddTargetButton(onTap: onAdd, width: 280),
       ],
     );
   }
 }
 
 class _AddTargetButton extends StatelessWidget {
-  const _AddTargetButton({required this.onTap});
+  const _AddTargetButton({required this.onTap, this.width});
 
   final VoidCallback onTap;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
+      width: width ?? double.infinity,
       height: 54,
       child: OutlinedButton(
         onPressed: onTap,
@@ -621,8 +623,8 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        height: 120,
-        padding: const EdgeInsets.fromLTRB(14, 16, 10, 12),
+        height: 108,
+        padding: const EdgeInsets.fromLTRB(14, 12, 10, 10),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(18),
@@ -642,7 +644,7 @@ class _StatCard extends StatelessWidget {
                 Text(
                   value,
                   style: TextStyle(
-                    fontSize: 42,
+                    fontSize: 36,
                     height: .9,
                     fontWeight: FontWeight.w800,
                     color: color,
