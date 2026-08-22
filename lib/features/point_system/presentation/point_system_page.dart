@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/design_system/gone_theme.dart';
 import '../application/point_system_notifier.dart';
 import '../domain/point_system.dart';
+import 'point_issue_form_page.dart';
 
 class PointSystemPage extends ConsumerStatefulWidget {
   const PointSystemPage({super.key});
@@ -39,11 +40,11 @@ class _Tabs extends StatelessWidget { const _Tabs({required this.selected, requi
 
 class _IssueTab extends ConsumerWidget { const _IssueTab({required this.state}); final PointSystemState state;
   @override Widget build(BuildContext context, WidgetRef ref) { final c=ref.read(pointSystemProvider.notifier); return Column(crossAxisAlignment:CrossAxisAlignment.start, children:[
-    if(state.students.isEmpty) const Expanded(child: Center(child: Text('발급 대상자를 추가해 주세요', style: TextStyle(fontSize:20,fontWeight:FontWeight.w700,color:GoneColors.deepNavy)))) else Expanded(child: ListView(children:[const Text('발급 명단',style:TextStyle(fontSize:18,fontWeight:FontWeight.w800)),const SizedBox(height:12),...state.students.map((s)=>Card(child:ListTile(title:Text(s.name,style:const TextStyle(fontWeight:FontWeight.w700)),subtitle:Text(s.info),trailing:IconButton(icon:const Icon(Icons.close),onPressed:()=>c.removeStudent(s))))])),
+    if(state.students.isEmpty) const Expanded(child: Center(child: Text('발급 대상자를 추가해 주세요', style: TextStyle(fontSize:20,fontWeight:FontWeight.w700,color:GoneColors.deepNavy)))) else Expanded(child: ListView(children:[const Text('발급 명단',style:TextStyle(fontSize:18,fontWeight:FontWeight.w800)),const SizedBox(height:12),...state.students.map((s)=>Card(child:ListTile(onTap:()=>Navigator.push(context,MaterialPageRoute(builder:(_)=>PointIssueFormPage(student:s))),title:Text(s.name,style:const TextStyle(fontWeight:FontWeight.w700)),subtitle:Text(s.info),trailing:IconButton(icon:const Icon(Icons.close),onPressed:()=>c.removeStudent(s))))])),
     OutlinedButton.icon(onPressed:()=>_pick(context,c),icon:const Icon(Icons.add),label:const Text('발급 대상자 추가'),style:OutlinedButton.styleFrom(minimumSize:const Size.fromHeight(50),foregroundColor:GoneColors.primary)),
     const SizedBox(height:12), Row(children:[OutlinedButton(onPressed:c.clear,child:const Text('전체 삭제')),const SizedBox(width:12),Expanded(child:FilledButton(onPressed:state.students.isEmpty?null:(){final records=c.issueAll();ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('${records.length}명 점수 발급이 완료되었습니다.')));},style:FilledButton.styleFrom(minimumSize:const Size.fromHeight(52),backgroundColor:GoneColors.primary),child:const Text('점수 발급')))])
   ]); }
-  void _pick(BuildContext context, PointSystemNotifier c) { showModalBottomSheet(context:context,builder:(_)=>ListView(children: mockPointStudents.map((s)=>ListTile(title:Text('${s.id} ${s.name}'),subtitle:Text(s.info),trailing:const Icon(Icons.add_circle,color:GoneColors.primary),onTap:(){c.addStudent(s);Navigator.pop(context);})).toList())); }
+  void _pick(BuildContext context, PointSystemNotifier c) { showModalBottomSheet(context:context,builder:(sheetContext)=>ListView(children: mockPointStudents.map((s)=>ListTile(title:Text('${s.id} ${s.name}'),subtitle:Text(s.info),trailing:const Icon(Icons.add_circle,color:GoneColors.primary),onTap:(){c.addStudent(s);Navigator.pop(sheetContext);Navigator.push(context,MaterialPageRoute(builder:(_)=>PointIssueFormPage(student:s)));})).toList())); }
 }
 
 class _HistoryTab extends StatelessWidget { const _HistoryTab({required this.records}); final List<PointIssueRecord> records; @override Widget build(BuildContext context)=>records.isEmpty?const Center(child:Text('발급 내역이 없어요')):ListView(children:records.map((r)=>Card(child:ListTile(leading:Text('${r.draft.kind.prefix}${r.draft.points}',style:TextStyle(fontSize:24,fontWeight:FontWeight.bold,color:r.draft.kind==PointKind.reward?GoneColors.success:GoneColors.error)),title:Text(r.student.name),subtitle:Text(r.draft.item))).toList()); }

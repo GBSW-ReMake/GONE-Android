@@ -22,7 +22,7 @@ class PointSystemNotifier extends Notifier<PointSystemState> {
     final drafts = {...state.drafts}..remove(student.id);
     state = state.copyWith(students: state.students.where((item) => item.id != student.id).toList(), drafts: drafts);
   }
-  void clear() => state = const PointSystemState(records: []);
+  void clear() => state = PointSystemState(records: state.records);
   List<PointIssueRecord> issueAll() {
     final records = state.students.map((student) => PointIssueRecord(student: student, draft: state.drafts[student.id] ?? const PointIssueDraft(), issuedAt: DateTime.now())).toList();
     state = PointSystemState(records: [...records, ...state.records]);
