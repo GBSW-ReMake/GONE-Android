@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/design_system/gone_theme.dart';
+import '../../auth/domain/account_role.dart';
 import '../../camping_reservation/presentation/camping_reservation_page.dart';
 import '../../lab_rental/presentation/lab_rental_page.dart';
 import '../../my/presentation/my_page.dart';
 import '../../outing/presentation/outing_page.dart';
+import '../../point_system/presentation/point_system_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, this.onLogout});
+  const HomePage({super.key, required this.role, this.onLogout});
 
+  final AccountRole role;
   final VoidCallback? onLogout;
 
   @override
@@ -40,7 +43,9 @@ class _HomePageState extends State<HomePage> {
           : _selectedTab == 2
           ? const OutingPage()
           : _selectedTab == 3
-          ? const CampingReservationPage(showBottomNavigation: false)
+          ? widget.role == AccountRole.teacher
+                ? const PointSystemPage()
+                : const CampingReservationPage(showBottomNavigation: false)
           : _selectedTab == 4
           ? MyPage(onLogout: widget.onLogout ?? () {})
           : SafeArea(
@@ -89,7 +94,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         const SizedBox(height: 18),
-        _profileCard(),
+        _profileCard(showPointSummary: widget.role == AccountRole.student),
         const SizedBox(height: 18),
         _sectionHeader(
           icon: 'assets/images/section-schedule.png',
@@ -190,7 +195,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _profileCard() {
+  Widget _profileCard({required bool showPointSummary}) {
     return _surface(
       padding: const EdgeInsets.fromLTRB(18, 17, 18, 15),
       child: Column(
@@ -206,24 +211,19 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _ProfileStat(
-                label: '상점',
-                value: '+15',
-                color: GoneColors.primary,
-              ),
-              _ProfileStat(label: '벌점', value: '-3', color: Color(0xFFBB4A4A)),
-              _ProfileStat(
-                label: '현재 점수',
-                value: '+12점',
-                color: Color(0xFF1F2937),
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
+          if (showPointSummary) ...[
+            const SizedBox(height: 16),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _ProfileStat(label: '상점', value: '+15', color: GoneColors.primary),
+                _ProfileStat(label: '벌점', value: '-3', color: Color(0xFFBB4A4A)),
+                _ProfileStat(label: '현재 점수', value: '+12점', color: Color(0xFF1F2937)),
+              ],
+            ),
+            const SizedBox(height: 15),
+          ] else
+            const SizedBox(height: 15),
           Row(
             children: [
               Text(
@@ -381,7 +381,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _bottomNavigation() {
-    const labels = ['홈', '실습실', '외출', '스쿨캠핑', '마이'];
+    final labels = [
+      '홈',
+      '실습실',
+      '외출',
+      widget.role == AccountRole.teacher ? '상벌점' : '스쿨캠핑',
+      '마이',
+    ];
     const icons = [
       'home.svg',
       'lab.svg',
