@@ -33,13 +33,9 @@ class RoleSelectionPage extends StatelessWidget {
                 style: textTheme.bodyMedium?.copyWith(height: 1.55),
               ),
               const Spacer(),
-              Center(
-                child: Image.asset(
-                  'assets/images/role-selection-illustration.png',
-                  width: 280,
-                  semanticLabel: 'GONE 서비스 이용 안내',
-                ),
-              ),
+              // 역할 선택 일러스트는 현재 제공된 에셋이 없어 빈 영역으로 유지한다.
+              // 삭제된 파일을 참조하면 로그인 화면에 Asset not found 오류가 표시된다.
+              const SizedBox(height: 220),
               const Spacer(),
               GonePrimaryButton(
                 label: '학생으로 로그인',

@@ -216,9 +216,21 @@ class _HomePageState extends State<HomePage> {
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _ProfileStat(label: '상점', value: '+15', color: GoneColors.primary),
-                _ProfileStat(label: '벌점', value: '-3', color: Color(0xFFBB4A4A)),
-                _ProfileStat(label: '현재 점수', value: '+12점', color: Color(0xFF1F2937)),
+                _ProfileStat(
+                  label: '상점',
+                  value: '+15',
+                  color: GoneColors.primary,
+                ),
+                _ProfileStat(
+                  label: '벌점',
+                  value: '-3',
+                  color: Color(0xFFBB4A4A),
+                ),
+                _ProfileStat(
+                  label: '현재 점수',
+                  value: '+12점',
+                  color: Color(0xFF1F2937),
+                ),
               ],
             ),
             const SizedBox(height: 15),
@@ -388,11 +400,11 @@ class _HomePageState extends State<HomePage> {
       widget.role == AccountRole.teacher ? '상벌점' : '스쿨캠핑',
       '마이',
     ];
-    const icons = [
+    final icons = [
       'home.svg',
       'lab.svg',
       'outing.svg',
-      'camping.svg',
+      widget.role == AccountRole.teacher ? 'point.svg' : 'camping.svg',
       'my.svg',
     ];
     return SafeArea(
