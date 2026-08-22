@@ -41,6 +41,7 @@ class AuthFlowPage extends ConsumerWidget {
         ),
         AuthDestination.home => HomePage(
           key: const ValueKey('home'),
+          role: flow.role,
           onLogout: controller.logout,
         ),
       },
