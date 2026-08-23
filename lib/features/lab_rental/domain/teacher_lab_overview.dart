@@ -13,6 +13,7 @@ enum LabUsagePeriod {
 class TeacherLabBooking {
   const TeacherLabBooking({
     required this.dateLabel,
+    required this.weekdayLabel,
     required this.period,
     required this.usageTime,
     required this.bookers,
@@ -21,6 +22,7 @@ class TeacherLabBooking {
   });
 
   final String dateLabel;
+  final String weekdayLabel;
   final LabUsagePeriod period;
   final String usageTime;
   final String bookers;

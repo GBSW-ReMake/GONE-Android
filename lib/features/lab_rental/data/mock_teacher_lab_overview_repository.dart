@@ -24,6 +24,7 @@ class MockTeacherLabOverviewRepository
     if (room.id == 'lab-401') {
       return TeacherLabBooking(
         dateLabel: _dateLabel(date),
+        weekdayLabel: _weekdayLabel(date),
         period: LabUsagePeriod.nightStudy,
         usageTime: '19:10 ~ 20:30',
         bookers: '김은찬 외 4명',
@@ -34,6 +35,7 @@ class MockTeacherLabOverviewRepository
     if (room.id == 'lab-402') {
       return TeacherLabBooking(
         dateLabel: _dateLabel(date),
+        weekdayLabel: _weekdayLabel(date),
         period: LabUsagePeriod.afterSchool,
         usageTime: '16:30 ~ 18:00',
         bookers: '김은찬 외 4명',
@@ -45,4 +47,9 @@ class MockTeacherLabOverviewRepository
   }
 
   String _dateLabel(DateTime date) => '${date.month}월 ${date.day}일';
+
+  String _weekdayLabel(DateTime date) {
+    const weekdays = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'];
+    return weekdays[date.weekday - 1];
+  }
 }

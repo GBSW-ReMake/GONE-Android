@@ -425,7 +425,7 @@ class TeacherLabBookingDetailPage extends StatelessWidget {
               _UsageBadge(period: booking.period),
               const SizedBox(height: 28),
               Text(
-                booking.dateLabel,
+                '${booking.dateLabel} ${booking.weekdayLabel}',
                 style: const TextStyle(
                   fontSize: 18,
                   color: Color(0xFF667085),
