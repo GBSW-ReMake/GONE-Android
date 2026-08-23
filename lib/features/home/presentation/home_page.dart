@@ -5,6 +5,7 @@ import '../../../core/design_system/gone_theme.dart';
 import '../../auth/domain/account_role.dart';
 import '../../camping_reservation/presentation/camping_reservation_page.dart';
 import '../../lab_rental/presentation/lab_rental_page.dart';
+import '../../lab_rental/presentation/teacher_lab_overview_page.dart';
 import '../../my/presentation/my_page.dart';
 import '../../outing/presentation/outing_page.dart';
 import '../../point_system/presentation/point_system_page.dart';
@@ -39,7 +40,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: const Color(0xFFF3F5F9),
       body: _selectedTab == 1
-          ? const LabRentalPage(showBottomNavigation: false)
+          ? widget.role == AccountRole.teacher
+                ? const TeacherLabOverviewPage()
+                : const LabRentalPage(showBottomNavigation: false)
           : _selectedTab == 2
           ? const OutingPage()
           : _selectedTab == 3
