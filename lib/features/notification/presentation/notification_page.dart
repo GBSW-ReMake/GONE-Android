@@ -31,7 +31,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(12, 12, 20, 32),
+          padding: const EdgeInsets.fromLTRB(28, 12, 28, 32),
           children: [
             _NotificationHeader(
               onBack: () => Navigator.of(context).pop(),
@@ -58,45 +58,52 @@ class _NotificationHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 48,
-      child: Row(
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          Semantics(
-            button: true,
-            label: '뒤로가기',
-            child: IconButton(
-              onPressed: onBack,
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints.tightFor(width: 48, height: 48),
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 24),
+          const Text(
+            '알림',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: GoneColors.deepNavy,
             ),
           ),
-          const Expanded(
-            child: Text(
-              '알림',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: GoneColors.deepNavy,
-              ),
-            ),
-          ),
-          Semantics(
-            button: true,
-            enabled: onMarkAllRead != null,
-            label: '모두 읽음',
-            child: TextButton(
-              onPressed: onMarkAllRead,
-              style: TextButton.styleFrom(
-                minimumSize: const Size(72, 48),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Semantics(
+              button: true,
+              label: '뒤로가기',
+              child: IconButton(
+                onPressed: onBack,
                 padding: EdgeInsets.zero,
+                constraints: const BoxConstraints.tightFor(
+                  width: 48,
+                  height: 48,
+                ),
+                icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 24),
               ),
-              child: const Text(
-                '모두 읽음',
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: GoneColors.primary,
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Semantics(
+              button: true,
+              enabled: onMarkAllRead != null,
+              label: '모두 읽음',
+              child: TextButton(
+                onPressed: onMarkAllRead,
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(72, 48),
+                  padding: EdgeInsets.zero,
+                ),
+                child: const Text(
+                  '모두 읽음',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: GoneColors.primary,
+                  ),
                 ),
               ),
             ),
