@@ -13,8 +13,8 @@ enum NotificationGroup {
 enum NotificationType {
   camping('assets/images/home-camping.png'),
   outing('assets/images/home-outing.png'),
-  reward('assets/images/point-plus.png'),
-  penalty('assets/images/point-check.png'),
+  reward('assets/images/notification-reward.png'),
+  penalty('assets/images/notification-penalty.png'),
   lab('assets/images/home-lab.png');
 
   const NotificationType(this.assetPath);

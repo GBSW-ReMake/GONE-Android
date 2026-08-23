@@ -31,7 +31,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(28, 12, 28, 32),
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
           children: [
             _NotificationHeader(
               onBack: () => Navigator.of(context).pop(),
@@ -39,7 +39,7 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
                   ? null
                   : ref.read(notificationProvider.notifier).markAllRead,
             ),
-            const SizedBox(height: 38),
+            const SizedBox(height: 28),
             _NotificationContent(state: state),
           ],
         ),
@@ -75,7 +75,7 @@ class _NotificationHeader extends StatelessWidget {
               '알림',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 26,
+                fontSize: 22,
                 fontWeight: FontWeight.w700,
                 color: GoneColors.deepNavy,
               ),
@@ -94,7 +94,7 @@ class _NotificationHeader extends StatelessWidget {
               child: const Text(
                 '모두 읽음',
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: GoneColors.primary,
                 ),
@@ -141,17 +141,17 @@ class _NotificationContent extends StatelessWidget {
               Text(
                 entry.key.title,
                 style: const TextStyle(
-                  fontSize: 23,
+                  fontSize: 21,
                   fontWeight: FontWeight.w700,
                   color: GoneColors.deepNavy,
                 ),
               ),
-              const SizedBox(height: 22),
+              const SizedBox(height: 17),
               for (final item in entry.value) ...[
                 _NotificationRow(item: item),
-                const SizedBox(height: 28),
+                const SizedBox(height: 18),
               ],
-              const SizedBox(height: 10),
+              const SizedBox(height: 6),
             ],
           ],
         );
@@ -178,11 +178,11 @@ class _NotificationRow extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: 64,
-              height: 64,
+              width: 50,
+              height: 50,
               child: Image.asset(item.type.assetPath, fit: BoxFit.contain),
             ),
-            const SizedBox(width: 18),
+            const SizedBox(width: 14),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,8 +192,8 @@ class _NotificationRow extends ConsumerWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontSize: 16,
-                      height: 1.35,
+                      fontSize: 14,
+                      height: 1.4,
                       fontWeight: item.isRead
                           ? FontWeight.w600
                           : FontWeight.w700,
@@ -202,13 +202,13 @@ class _NotificationRow extends ConsumerWidget {
                           : GoneColors.deepNavy,
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 4),
                   Text(
                     item.description,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontSize: 13,
+                      fontSize: 12,
                       height: 1.45,
                       color: Color(0xFF7C879D),
                     ),
@@ -218,12 +218,12 @@ class _NotificationRow extends ConsumerWidget {
             ),
             const SizedBox(width: 8),
             SizedBox(
-              width: 58,
+              width: 52,
               child: Text(
                 item.timeLabel,
                 textAlign: TextAlign.right,
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 11,
                   color: item.isRead
                       ? const Color(0xFF98A2B3)
                       : GoneColors.primary,

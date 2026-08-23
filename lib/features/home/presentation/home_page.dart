@@ -202,7 +202,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget _notificationButton(int unreadCount) {
     return Semantics(
       button: true,
-      label: unreadCount == 0 ? '알림' : '알림 $unreadCount개',
+      label: '알림',
       child: InkWell(
         onTap: () => Navigator.of(context).push(
           MaterialPageRoute<void>(
@@ -225,24 +225,14 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
               if (unreadCount > 0)
                 Positioned(
-                  right: -2,
-                  top: -3,
+                  right: 1,
+                  top: 3,
                   child: Container(
-                    constraints: const BoxConstraints(minWidth: 16),
-                    height: 16,
-                    padding: const EdgeInsets.symmetric(horizontal: 3),
-                    alignment: Alignment.center,
+                    width: 8,
+                    height: 8,
                     decoration: const BoxDecoration(
                       color: GoneColors.error,
                       shape: BoxShape.circle,
-                    ),
-                    child: Text(
-                      unreadCount > 99 ? '99+' : '$unreadCount',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 9,
-                        fontWeight: FontWeight.w700,
-                      ),
                     ),
                   ),
                 ),
