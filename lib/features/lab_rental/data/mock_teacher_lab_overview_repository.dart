@@ -2,8 +2,7 @@ import '../domain/lab_rental.dart';
 import '../domain/teacher_lab_overview.dart';
 import 'teacher_lab_overview_repository.dart';
 
-class MockTeacherLabOverviewRepository
-    implements TeacherLabOverviewRepository {
+class MockTeacherLabOverviewRepository implements TeacherLabOverviewRepository {
   @override
   Future<List<TeacherLabRoomStatus>> fetchOverview({
     required DateTime date,

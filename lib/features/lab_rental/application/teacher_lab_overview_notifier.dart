@@ -91,7 +91,7 @@ class TeacherLabOverviewNotifier extends Notifier<TeacherLabOverviewState> {
   }
 }
 
-final teacherLabOverviewProvider = NotifierProvider<
-  TeacherLabOverviewNotifier,
-  TeacherLabOverviewState
->(TeacherLabOverviewNotifier.new);
+final teacherLabOverviewProvider =
+    NotifierProvider<TeacherLabOverviewNotifier, TeacherLabOverviewState>(
+      TeacherLabOverviewNotifier.new,
+    );
