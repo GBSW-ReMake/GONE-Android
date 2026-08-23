@@ -124,9 +124,7 @@ class _FloorTabs extends StatelessWidget {
                     '$floor층',
                     style: TextStyle(
                       fontSize: 13,
-                      fontWeight: selected
-                          ? FontWeight.w700
-                          : FontWeight.w600,
+                      fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
                       color: selected
                           ? GoneColors.primary
                           : const Color(0xFF98A2B3),
@@ -164,7 +162,7 @@ class _OverviewContent extends StatelessWidget {
         );
       case TeacherLabOverviewStatus.error:
         return _OverviewMessage(
-          icon: Icons.wifi_exclamationmark,
+          icon: Icons.wifi_off,
           title: '현황을 불러올 수 없어요',
           message: state.errorMessage ?? '잠시 후 다시 시도해 주세요.',
         );
@@ -320,7 +318,7 @@ class _UsageBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.12),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Text(
@@ -426,10 +424,7 @@ class TeacherLabBookingDetailPage extends StatelessWidget {
               const SizedBox(height: 28),
               Text(
                 '${booking.dateLabel} ${booking.weekdayLabel}',
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Color(0xFF667085),
-                ),
+                style: const TextStyle(fontSize: 18, color: Color(0xFF667085)),
               ),
               const SizedBox(height: 24),
               Text(
@@ -451,7 +446,6 @@ class TeacherLabBookingDetailPage extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class _DetailSection extends StatelessWidget {
