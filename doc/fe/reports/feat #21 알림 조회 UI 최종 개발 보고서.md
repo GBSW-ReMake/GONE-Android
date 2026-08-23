@@ -3,7 +3,7 @@
 > **완료일**: 2026-08-24
 > **작업 번호**: #21
 > **관련 이슈**: [#21](https://github.com/GBSW-ReMake/GONE-Android/issues/21)
-> **PR**: 생성 예정 (`dev` 대상 Ready for review)
+> **PR**: [#22](https://github.com/GBSW-ReMake/GONE-Android/pull/22) (`dev` 대상 Ready for review)
 > **브랜치**: `feat/21-notification-ui`
 > **상태**: 코드 검증 완료, 에뮬레이터/실기기 화면 테스트 및 개발자 검토 대기
 
