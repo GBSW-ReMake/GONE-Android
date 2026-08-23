@@ -71,38 +71,44 @@ class _NotificationHeader extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.centerLeft,
-            child: Semantics(
-              button: true,
-              label: '뒤로가기',
-              child: IconButton(
-                onPressed: onBack,
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints.tightFor(
-                  width: 48,
-                  height: 48,
+            child: Transform.translate(
+              offset: const Offset(-6, 0),
+              child: Semantics(
+                button: true,
+                label: '뒤로가기',
+                child: IconButton(
+                  onPressed: onBack,
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints.tightFor(
+                    width: 48,
+                    height: 48,
+                  ),
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 24),
                 ),
-                icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 24),
               ),
             ),
           ),
           Align(
             alignment: Alignment.centerRight,
-            child: Semantics(
-              button: true,
-              enabled: onMarkAllRead != null,
-              label: '모두 읽음',
-              child: TextButton(
-                onPressed: onMarkAllRead,
-                style: TextButton.styleFrom(
-                  minimumSize: const Size(72, 48),
-                  padding: EdgeInsets.zero,
-                ),
-                child: const Text(
-                  '모두 읽음',
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: GoneColors.primary,
+            child: Transform.translate(
+              offset: const Offset(6, 0),
+              child: Semantics(
+                button: true,
+                enabled: onMarkAllRead != null,
+                label: '모두 읽음',
+                child: TextButton(
+                  onPressed: onMarkAllRead,
+                  style: TextButton.styleFrom(
+                    minimumSize: const Size(72, 48),
+                    padding: EdgeInsets.zero,
+                  ),
+                  child: const Text(
+                    '모두 읽음',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: GoneColors.primary,
+                    ),
                   ),
                 ),
               ),
