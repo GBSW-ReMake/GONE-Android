@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/design_system/gone_theme.dart';
@@ -9,24 +10,34 @@ import '../../lab_rental/presentation/teacher_lab_overview_page.dart';
 import '../../my/presentation/my_page.dart';
 import '../../outing/presentation/outing_page.dart';
 import '../../point_system/presentation/point_system_page.dart';
+import '../../notification/application/notification_notifier.dart';
+import '../../notification/presentation/notification_page.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key, required this.role, this.onLogout});
 
   final AccountRole role;
   final VoidCallback? onLogout;
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   final PageController _scheduleController = PageController();
   final PageController _mealController = PageController();
   int _selectedTab = 0;
   int _schedulePage = 0;
   int _mealPage = 0;
   int _month = 8;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(
+      () => ref.read(notificationProvider.notifier).load(widget.role),
+    );
+  }
 
   @override
   void dispose() {
@@ -37,6 +48,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final unreadCount = ref.watch(
+      notificationProvider.select(
+        (state) => state.role == widget.role ? state.unreadCount : 0,
+      ),
+    );
     return Scaffold(
       backgroundColor: const Color(0xFFF3F5F9),
       body: _selectedTab == 1
@@ -53,7 +69,7 @@ class _HomePageState extends State<HomePage> {
           ? MyPage(onLogout: widget.onLogout ?? () {})
           : SafeArea(
               child: _selectedTab == 0
-                  ? _home()
+                  ? _home(unreadCount)
                   : Center(
                       child: Text(
                         '준비 중인 기능입니다',
@@ -65,7 +81,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _home() {
+  Widget _home(int unreadCount) {
     return ListView(
       padding: const EdgeInsets.fromLTRB(26, 24, 26, 20),
       children: [
@@ -78,22 +94,7 @@ class _HomePageState extends State<HomePage> {
               alignment: Alignment.centerLeft,
             ),
             const Spacer(),
-            Semantics(
-              button: true,
-              label: '알림',
-              child: InkWell(
-                onTap: () {},
-                borderRadius: BorderRadius.circular(20),
-                child: Padding(
-                  padding: const EdgeInsets.all(6),
-                  child: SvgPicture.asset(
-                    'assets/icons/bell.svg',
-                    width: 21,
-                    height: 21,
-                  ),
-                ),
-              ),
-            ),
+            _notificationButton(unreadCount),
           ],
         ),
         const SizedBox(height: 18),
@@ -195,6 +196,60 @@ class _HomePageState extends State<HomePage> {
           statusColor: Color(0xFF5B8DEF),
         ),
       ],
+    );
+  }
+
+  Widget _notificationButton(int unreadCount) {
+    return Semantics(
+      button: true,
+      label: unreadCount == 0 ? '알림' : '알림 $unreadCount개',
+      child: InkWell(
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (_) => NotificationPage(role: widget.role),
+          ),
+        ),
+        borderRadius: BorderRadius.circular(20),
+        child: SizedBox(
+          width: 36,
+          height: 36,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Center(
+                child: SvgPicture.asset(
+                  'assets/icons/bell.svg',
+                  width: 21,
+                  height: 21,
+                ),
+              ),
+              if (unreadCount > 0)
+                Positioned(
+                  right: -2,
+                  top: -3,
+                  child: Container(
+                    constraints: const BoxConstraints(minWidth: 16),
+                    height: 16,
+                    padding: const EdgeInsets.symmetric(horizontal: 3),
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: GoneColors.error,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text(
+                      unreadCount > 99 ? '99+' : '$unreadCount',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 9,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
