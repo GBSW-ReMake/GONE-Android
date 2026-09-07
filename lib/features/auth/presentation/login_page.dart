@@ -28,6 +28,12 @@ class _LoginPageState extends State<LoginPage> {
   String? _identifierError;
   String? _passwordError;
 
+  bool get buttonEnabled =>
+      _passwordController.text.isNotEmpty &&
+          _identifierController.text
+              .trim()
+              .isNotEmpty;
+
   @override
   void dispose() {
     _identifierController.dispose();
@@ -53,34 +59,49 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       bottomNavigationBar: SafeArea(
-        minimum: const EdgeInsets.fromLTRB(20, 8, 20, 14),
-        child: GonePrimaryButton(label: '로그인', onPressed: _submit),
+        minimum: const EdgeInsets.symmetric(horizontal: 20),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: GonePrimaryButton(
+            label: '로그인',
+            enabled: buttonEnabled,
+            onPressed: _submit,
+          ),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 10, 20, 96),
+          padding: const EdgeInsets.fromLTRB(20, 18, 20, 96),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GoneBackButton(onPressed: widget.onBack, label: '로그인 유형 다시 선택'),
-              const SizedBox(height: 24),
               const GoneLogo(width: 80),
               const SizedBox(height: 24),
               Text(
                 '학교생활을 더 간편하게',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(
                   fontWeight: FontWeight.bold,
                   height: 1.25,
+                  color: GoneColors.textPrimary,
                 ),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 8),
               Text(
-                '${widget.role.label} 계정으로 로그인하고 학교의 서비스를 한곳에서 이용해보세요.',
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.copyWith(height: 1.5),
+                'GONE에 로그인하고 학교의 서비스를\n한곳에서 이용해보세요.',
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(
+                  height: 1.5,
+                  color: GoneColors.textSecondary,
+                ),
               ),
-              const SizedBox(height: 28),
+              const SizedBox(height: 48),
               TextField(
                 controller: _identifierController,
                 keyboardType: TextInputType.visiblePassword,
@@ -94,17 +115,14 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: '아이디 또는 전화번호를 입력해주세요',
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   labelStyle: const TextStyle(
-                    color: Color(0xFF667085),
+                    color: GoneColors.textSecondary,
                     fontWeight: FontWeight.w600,
                   ),
-                  hintStyle: const TextStyle(
-                    color: Color(0xFF98A2B3),
-                    fontSize: 18,
-                  ),
+                  hintStyle: const TextStyle(color: GoneColors.gray500),
                   errorText: _identifierError,
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               TextField(
                 controller: _passwordController,
                 obscureText: true,
@@ -119,25 +137,26 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: '비밀번호를 입력해주세요',
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   labelStyle: const TextStyle(
-                    color: Color(0xFF667085),
+                    color: GoneColors.textSecondary,
                     fontWeight: FontWeight.w600,
                   ),
-                  hintStyle: const TextStyle(
-                    color: Color(0xFF98A2B3),
-                    fontSize: 18,
-                  ),
+                  hintStyle: const TextStyle(color: GoneColors.gray500),
                   errorText: _passwordError,
                 ),
               ),
-              const SizedBox(height: 28),
+              const SizedBox(height: 24),
               Center(
                 child: Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
                       '아직 회원이 아니신가요? ',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(
+                        color: GoneColors.textSecondary,
                       ),
                     ),
                     Semantics(
@@ -149,8 +168,6 @@ class _LoginPageState extends State<LoginPage> {
                           foregroundColor: GoneColors.primary,
                           minimumSize: const Size(48, 48),
                           padding: const EdgeInsets.symmetric(horizontal: 4),
-                          textStyle: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(fontWeight: FontWeight.w700),
                         ),
                         child: const Text('회원가입'),
                       ),
