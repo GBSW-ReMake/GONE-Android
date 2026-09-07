@@ -7,6 +7,12 @@ abstract final class GoneColors {
   static const success = Color(0xFF34C77B);
   static const warning = Color(0xFFFFB547);
   static const error = Color(0xFFFF5A5F);
+  static const gray50 = Color(0xFFF8F9FB);
+  static const gray100 = Color(0xFFF1F3F5);
+  static const gray300 = Color(0xFFDDE1E6);
+  static const gray500 = Color(0xFF98A0AA);
+  static const textPrimary = Color(0xFF1F2937);
+  static const textSecondary = Color(0xFF667085);
 }
 
 abstract final class GoneTheme {

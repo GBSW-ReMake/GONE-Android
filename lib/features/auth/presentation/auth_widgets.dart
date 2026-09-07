@@ -27,7 +27,9 @@ class GonePrimaryButton extends StatelessWidget {
           disabledBackgroundColor: Theme.of(
             context,
           ).colorScheme.surfaceContainerHighest,
-          minimumSize: const Size.fromHeight(48),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
         ),
         child: Text(label),
       ),
