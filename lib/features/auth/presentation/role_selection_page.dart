@@ -15,7 +15,7 @@ class RoleSelectionPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 18, 20, 16),
+          padding: const EdgeInsets.fromLTRB(24, 18, 24, 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
