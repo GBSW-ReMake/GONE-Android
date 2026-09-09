@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gone/features/navigation/presentation/main_screen.dart';
+import 'package:gone/features/navigation/presentation/main_page.dart';
 
 import '../application/auth_flow_notifier.dart';
 import 'login_page.dart';
 import 'role_selection_page.dart';
 import 'signup_page.dart';
 import 'splash_page.dart';
-import '../../home/presentation/home_page.dart';
 
 class AuthFlowPage extends ConsumerWidget {
   const AuthFlowPage({super.key});
@@ -40,7 +39,7 @@ class AuthFlowPage extends ConsumerWidget {
           role: flow.role,
           onBack: controller.showLogin,
         ),
-        AuthDestination.home => MainScreen(
+        AuthDestination.home => MainPage(
           key: const ValueKey('main'),
           role: flow.role,
           onLogout: controller.logout,
