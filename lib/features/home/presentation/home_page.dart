@@ -14,10 +14,9 @@ import '../../notification/application/notification_notifier.dart';
 import '../../notification/presentation/notification_page.dart';
 
 class HomePage extends ConsumerStatefulWidget {
-  const HomePage({super.key, required this.role, this.onLogout});
+  const HomePage({super.key, required this.role});
 
   final AccountRole role;
-  final VoidCallback? onLogout;
 
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
@@ -55,29 +54,17 @@ class _HomePageState extends ConsumerState<HomePage> {
     );
     return Scaffold(
       backgroundColor: const Color(0xFFF3F5F9),
-      body: _selectedTab == 1
-          ? widget.role == AccountRole.teacher
-                ? const TeacherLabOverviewPage()
-                : const LabRentalPage(showBottomNavigation: false)
-          : _selectedTab == 2
-          ? const OutingPage()
-          : _selectedTab == 3
-          ? widget.role == AccountRole.teacher
-                ? const PointSystemPage()
-                : const CampingReservationPage(showBottomNavigation: false)
-          : _selectedTab == 4
-          ? MyPage(onLogout: widget.onLogout ?? () {})
-          : SafeArea(
-              child: _selectedTab == 0
-                  ? _home(unreadCount)
-                  : Center(
-                      child: Text(
-                        '준비 중인 기능입니다',
-                        style: _text(size: 16, weight: FontWeight.w600),
-                      ),
-                    ),
-            ),
-      bottomNavigationBar: _bottomNavigation(),
+      body: SafeArea(
+        child: _selectedTab == 0
+            ? _home(unreadCount)
+            : Center(
+          child: Text(
+            '준비 중인 기능입니다',
+            style: _text(size: 16, weight: FontWeight.w600),
+          ),
+        ),
+      ),
+      // bottomNavigationBar: _bottomNavigation(),
     );
   }
 

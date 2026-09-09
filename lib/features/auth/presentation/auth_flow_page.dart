@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gone/features/navigation/presentation/main_screen.dart';
 
 import '../application/auth_flow_notifier.dart';
 import 'login_page.dart';
@@ -39,11 +40,16 @@ class AuthFlowPage extends ConsumerWidget {
           role: flow.role,
           onBack: controller.showLogin,
         ),
-        AuthDestination.home => HomePage(
-          key: const ValueKey('home'),
+        AuthDestination.home => MainScreen(
+          key: const ValueKey('main'),
           role: flow.role,
           onLogout: controller.logout,
         ),
+        // HomePage(
+        //   key: const ValueKey('home'),
+        //   role: flow.role,
+        //   onLogout: controller.logout,
+        // ),
       },
     );
   }
