@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gone/core/design_system/gone_theme.dart';
-import 'package:gone/features/home/application/profile_repository_provider.dart';
+import 'package:gone/features/home/application/home_profile_provider.dart';
 
 class ProfileCard extends ConsumerWidget {
   const ProfileCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final profileAsync = ref.watch(profileRepositoryProvider);
+    final profileAsync = ref.watch(homeProfileProvider);
 
-    return profileAsync.when(
-      error: (error, stackTrace) => const Center(child: Text('프로필을 불러오지 못했습니다.')),
-      loading: () => const CircularProgressIndicator(color: GoneColors.primary),
-      data: (profileData) => Container(
-        padding: const EdgeInsets.all(16),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-        ),
-        child: Column(
+    return Container(
+      padding: const EdgeInsets.all(16),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+      ),
+      child: profileAsync.when(
+        error: (error, stackTrace) => const Center(child: Text('프로필을 불러오지 못했습니다.')),
+        loading: () => const CircularProgressIndicator(color: GoneColors.primary),
+        data: (profileData) => Column(
           spacing: 16,
           children: [
             Row(

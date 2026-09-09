@@ -49,13 +49,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         .read(authRepositoryProvider)
         .login(_identifierController.text, _passwordController.text);
 
-    if (result != null) {
-      Fluttertoast.showToast(
-        msg: result.message,
-        toastLength: Toast.LENGTH_SHORT,
-      );
-      return;
-    }
+    // if (result != null) {
+    //   Fluttertoast.showToast(
+    //     msg: result.message,
+    //     toastLength: Toast.LENGTH_SHORT,
+    //   );
+    //   return;
+    // }
 
     widget.onLogin();
   }

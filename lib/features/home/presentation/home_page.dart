@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gone/core/app_widgets.dart';
 import 'package:gone/features/home/presentation/widgets/profile_card.dart';
+import 'package:gone/features/home/presentation/widgets/schedule_card.dart';
 
 import '../../../core/design_system/gone_theme.dart';
 import '../../auth/domain/account_role.dart';
@@ -96,6 +97,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
     children: const [
       ProfileCard(),
+      ScheduleCard(),
     ],
   );
 
