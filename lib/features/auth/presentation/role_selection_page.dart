@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gone/core/design_system/gone_theme.dart';
 
 import '../domain/account_role.dart';
-import 'auth_widgets.dart';
+import '../../../core/app_widgets.dart';
 
 class RoleSelectionPage extends StatelessWidget {
   const RoleSelectionPage({super.key, required this.onSelected});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../core/design_system/gone_theme.dart';
+import 'design_system/gone_theme.dart';
 
 class GonePrimaryButton extends StatelessWidget {
   const GonePrimaryButton({

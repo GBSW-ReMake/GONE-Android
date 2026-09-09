@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../domain/account_role.dart';
-import 'auth_widgets.dart';
+import '../../../core/app_widgets.dart';
 
 enum _SignupStep { identifier, password, phone, student, profile }
 

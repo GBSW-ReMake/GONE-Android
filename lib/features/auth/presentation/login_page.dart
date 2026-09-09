@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/design_system/gone_theme.dart';
 import '../domain/account_role.dart';
-import 'auth_widgets.dart';
+import '../../../core/app_widgets.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({

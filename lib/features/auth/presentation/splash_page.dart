@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'auth_widgets.dart';
+import '../../../core/app_widgets.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key, required this.onFinished});
