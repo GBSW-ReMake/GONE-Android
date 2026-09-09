@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gone/features/auth/application/auth_repository_provider.dart';
 
 import '../../../core/design_system/gone_theme.dart';
 import '../domain/account_role.dart';
 import 'auth_widgets.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({
     super.key,
     required this.role,
@@ -19,10 +22,10 @@ class LoginPage extends StatefulWidget {
   final VoidCallback onLogin;
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   final _identifierController = TextEditingController();
   final _passwordController = TextEditingController();
   String? _identifierError;
@@ -30,9 +33,7 @@ class _LoginPageState extends State<LoginPage> {
 
   bool get buttonEnabled =>
       _passwordController.text.isNotEmpty &&
-          _identifierController.text
-              .trim()
-              .isNotEmpty;
+      _identifierController.text.trim().isNotEmpty;
 
   @override
   void dispose() {
@@ -41,17 +42,22 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _submit() {
-    final identifier = _identifierController.text.trim();
-    setState(() {
-      _identifierError = identifier.isEmpty ? '아이디 또는 전화번호를 입력해주세요.' : null;
-      _passwordError = _passwordController.text.isEmpty
-          ? '비밀번호를 입력해주세요.'
-          : null;
-    });
-    if (_identifierError == null && _passwordError == null) {
-      widget.onLogin();
+  void _submit() async {
+    if (_identifierError != null || _passwordError != null) return;
+
+    final result = await ref
+        .read(authRepositoryProvider)
+        .login(_identifierController.text, _passwordController.text);
+
+    if (result != null) {
+      Fluttertoast.showToast(
+        msg: result.message,
+        toastLength: Toast.LENGTH_SHORT,
+      );
+      return;
     }
+
+    widget.onLogin();
   }
 
   @override
@@ -71,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 18, 20, 96),
+          padding: const EdgeInsets.fromLTRB(24, 18, 24, 96),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -79,11 +85,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 24),
               Text(
                 '학교생활을 더 간편하게',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   height: 1.25,
                   color: GoneColors.textPrimary,
@@ -92,11 +94,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 8),
               Text(
                 'GONE에 로그인하고 학교의 서비스를\n한곳에서 이용해보세요.',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   height: 1.5,
                   color: GoneColors.textSecondary,
                 ),
@@ -151,11 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Text(
                       '아직 회원이 아니신가요? ',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: GoneColors.textSecondary,
                       ),
                     ),
