@@ -6,12 +6,6 @@ import 'package:gone/features/home/presentation/widgets/profile_card.dart';
 
 import '../../../core/design_system/gone_theme.dart';
 import '../../auth/domain/account_role.dart';
-import '../../camping_reservation/presentation/camping_reservation_page.dart';
-import '../../lab_rental/presentation/lab_rental_page.dart';
-import '../../lab_rental/presentation/teacher_lab_overview_page.dart';
-import '../../my/presentation/my_page.dart';
-import '../../outing/presentation/outing_page.dart';
-import '../../point_system/presentation/point_system_page.dart';
 import '../../notification/application/notification_notifier.dart';
 import '../../notification/presentation/notification_page.dart';
 
@@ -100,7 +94,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   Widget _home() => ListView(
     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-    children: [
+    children: const [
       ProfileCard(),
     ],
   );
