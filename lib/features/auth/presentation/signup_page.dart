@@ -2,13 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gone/core/design_system/gone_theme.dart';
 import 'package:gone/core/error/api_error_code.dart';
 import 'package:gone/features/auth/application/auth_repository_provider.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../domain/account_role.dart';
-import 'auth_widgets.dart';
+import '../../../core/app_widgets.dart';
 
 enum _SignupStep {
   identifier,
@@ -79,10 +80,16 @@ class _SignupErrors {
 }
 
 class SignupPage extends ConsumerStatefulWidget {
-  const SignupPage({super.key, required this.role, required this.onBack});
+  const SignupPage({
+    super.key,
+    required this.role,
+    required this.onBack,
+    required this.onLogin,
+  });
 
   final AccountRole role;
   final VoidCallback onBack;
+  final VoidCallback onLogin;
 
   @override
   ConsumerState<SignupPage> createState() => _SignupPageState();
@@ -110,13 +117,15 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     }
 
     if (_step == _SignupStep.profile) {
-      await ref.read(authRepositoryProvider).signup(
-        _fields.identifier.text,
-        _fields.password.text,
-        _fields.phone.text,
-          _verificationTicket
-      );
-      showServiceNotice(context, '회원가입 서비스 연결 정보를 확인 중입니다. 잠시 후 다시 시도해주세요.');
+      await ref
+          .read(authRepositoryProvider)
+          .signup(
+            _fields.identifier.text,
+            _fields.password.text,
+            _fields.phone.text,
+            _verificationTicket,
+          );
+      widget.onLogin();
       return;
     }
 
@@ -152,11 +161,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       return false;
     }
 
-    final result = await ref
-        .read(authRepositoryProvider)
-        .loginIdCheck(value);
+    final result = await ref.read(authRepositoryProvider).loginIdCheck(value);
 
-    if(result == ApiErrorCode.common001) {
+    if (result == ApiErrorCode.common001) {
       _errors.identifier = '아이디는 영문, 숫자로만 4자 이상 20자 이하로 입력해주세요';
       return false;
     }
@@ -170,9 +177,21 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   }
 
   Future<bool> _validatePassword() async {
-    if (_fields.password.text.isEmpty) {
+    final password = _fields.password.text;
+
+    if (password.isEmpty) {
       _errors.password = '비밀번호를 입력해주세요.';
       return false;
+    } else if (password.length < 8 || password.length > 20) {
+      _errors.password = '비밀번호는 8자 이상 20자 이하로 입력해주세요.';
+      return false;
+    } else if (!RegExp(
+      r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>_\-+=~`\[\];/\\]).+$',
+    ).hasMatch(password)) {
+      _errors.password = '비밀번호는 영문, 숫자, 특수문자를 모두 포함해야 합니다.';
+      return false;
+    } else {
+      _errors.password = null;
     }
 
     _errors.confirmation = _fields.password.text != _fields.confirmation.text
@@ -188,16 +207,21 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       return false;
     }
 
-    // TODO 인증 번호 부분은 나중에 다시
-    // final result = await ref
-    //     .read(authRepositoryProvider)
-    //     .verifyPhoneCode(_fields.phone.text, _fields.verificationCode.text);
-    // if (!result['success']) {
-    //   _errors.verificationCode =
-    //       '인증번호가 일치하지 않습니다. (남은 시도 횟수: ${result['data']['maxFailCount'] - result['data']['currentFailCount']})';
-    //   return false;
-    // }
-    // _verificationTicket = result['data']['ticket'];
+    final result = await ref
+        .read(authRepositoryProvider)
+        .verifyPhoneCode(_fields.phone.text, _fields.verificationCode.text);
+    if (!result['success']) {
+      _errors.verificationCode = switch (ApiErrorCode.from(result['code'])) {
+        ApiErrorCode.common001 => '인증번호는 숫자 6자리로 입력해주세요',
+        ApiErrorCode.auth001 =>
+          '인증번호가 일치하지 않습니다. (남은 시도 횟수: ${result['data']['maxFailCount'] - result['data']['currentFailCount']})',
+        ApiErrorCode.auth002 => '인증번호가 만료되었습니다. 다시 요청해주세요.',
+        ApiErrorCode.auth003 => '인증 시도 횟수를 초과했습니다. 잠시 후 다시 시도해주세요.',
+        _ => null,
+      };
+      return false;
+    }
+    _verificationTicket = result['data']['ticket'];
     return true;
   }
 
@@ -220,12 +244,16 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     setState(() => _errors.phone = error);
     if (error != null) return;
 
-    final result = await ref.read(authRepositoryProvider).sendPhoneCode(_fields.phone.text);
-
-    // if (result != null) {
-    //   _errors.identifier = result.message;
-    //   return false;
-    // }
+    final result = await ref
+        .read(authRepositoryProvider)
+        .sendPhoneCode(_fields.phone.text);
+    if (!result['success']) {
+      Fluttertoast.showToast(
+        msg:
+            '인증번호 재발송을 너무 많이 요청했습니다.\n${result['data']['remainingSeconds']}초 후 다시 요청 해 주세요.',
+        toastLength: Toast.LENGTH_LONG,
+      );
+    }
   }
 
   Future<void> _pickImage() async {
@@ -431,7 +459,11 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     ? null
                     : FileImage(File(_profileImage!.path)),
                 child: _profileImage == null
-                    ? const Icon(Icons.person_rounded, size: 64, color: GoneColors.gray500,)
+                    ? const Icon(
+                        Icons.person_rounded,
+                        size: 64,
+                        color: GoneColors.gray500,
+                      )
                     : null,
               ),
               Padding(
@@ -439,7 +471,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                 child: CircleAvatar(
                   radius: 17,
                   backgroundColor: GoneColors.primary,
-                  child: Icon(Icons.camera_alt, color: Colors.white, size: 18,),
+                  child: Icon(Icons.camera_alt, color: Colors.white, size: 18),
                 ),
               ),
             ],
@@ -448,9 +480,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         const SizedBox(height: 16),
         Text(
           '사진을 선택하지 않아도 괜찮아요',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: GoneColors.textSecondary
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(color: GoneColors.textSecondary),
         ),
       ],
     ),

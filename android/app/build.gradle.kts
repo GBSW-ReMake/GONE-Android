@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.eunchan.gone.gone"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
