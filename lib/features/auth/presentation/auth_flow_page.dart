@@ -38,6 +38,7 @@ class AuthFlowPage extends ConsumerWidget {
           key: const ValueKey('signup'),
           role: flow.role,
           onBack: controller.showLogin,
+          onLogin: controller.showHome,
         ),
         AuthDestination.home => MainPage(
           key: const ValueKey('main'),
