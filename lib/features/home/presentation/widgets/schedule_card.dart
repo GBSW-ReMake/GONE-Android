@@ -15,7 +15,7 @@ const _periodTimes = [
   (15 * 60 + 40, 16 * 60 + 30),
 ];
 
-String periodTimeLabel(int period) {
+String _periodTimeLabel(int period) {
   final (start, end) = _periodTimes[period - 1];
   return '${_formatMinutes(start)}–${_formatMinutes(end)}';
 }
@@ -39,11 +39,6 @@ class _ScheduleCardState extends ConsumerState<ScheduleCard> {
   int get _schedulePage => _scheduleController.hasClients
       ? _scheduleController.page?.round() ?? 0
       : 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   PageController _createScheduleController() {
     final now = DateTime.now();
@@ -158,7 +153,7 @@ class _ScheduleCardItem extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                periodTimeLabel(currentPeriod.period),
+                _periodTimeLabel(currentPeriod.period),
                 style: TextTheme.of(
                   context,
                 ).bodySmall?.copyWith(color: GoneColors.textSecondary),
