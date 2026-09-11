@@ -26,6 +26,7 @@ class CardTitle extends StatelessWidget {
             fontWeight: FontWeight.bold,
             height: 1.2,
           ),),
+          const Spacer(),
           ?action,
         ],
       ),

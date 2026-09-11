@@ -36,6 +36,10 @@ class ScheduleCard extends ConsumerStatefulWidget {
 class _ScheduleCardState extends ConsumerState<ScheduleCard> {
   late final PageController _scheduleController = _createScheduleController();
 
+  int get _schedulePage => _scheduleController.hasClients
+      ? _scheduleController.page?.round() ?? 0
+      : 0;
+
   @override
   void initState() {
     super.initState();
@@ -58,7 +62,13 @@ class _ScheduleCardState extends ConsumerState<ScheduleCard> {
 
     return Column(
       children: [
-        const CardTitle(icon: 'section-schedule.png', label: '오늘 시간표'),
+        CardTitle(
+          icon: 'section-schedule.png',
+          label: '오늘 시간표',
+          action: Text('${_schedulePage + 1}/7', style: TextTheme.of(context).bodyMedium?.copyWith(
+            color: GoneColors.textSecondary
+          ),),
+        ),
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -81,6 +91,7 @@ class _ScheduleCardState extends ConsumerState<ScheduleCard> {
               child: PageView.builder(
                 controller: _scheduleController,
                 itemCount: scheduleData.periods.length,
+                onPageChanged: (value) => setState(() {}),
                 itemBuilder: (context, index) => _ScheduleCardItem(
                   currentPeriod: scheduleData.periods[index],
                   nextPeriod: scheduleData.periods.length - 1 == index
