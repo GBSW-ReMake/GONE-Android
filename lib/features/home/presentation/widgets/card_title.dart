@@ -7,11 +7,13 @@ class CardTitle extends StatelessWidget {
     required this.icon,
     required this.label,
     this.action,
+    this.pushActionToEnd = true,
   });
 
   final String icon;
   final String label;
   final Widget? action;
+  final bool pushActionToEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +23,15 @@ class CardTitle extends StatelessWidget {
         spacing: 6,
         children: [
           Image.asset('assets/images/$icon', width: 22),
-          Text(label, style: TextTheme.of(context).titleMedium?.copyWith(
-            color: GoneColors.textPrimary,
-            fontWeight: FontWeight.bold,
-            height: 1.2,
-          ),),
-          const Spacer(),
+          Text(
+            label,
+            style: TextTheme.of(context).titleMedium?.copyWith(
+              color: GoneColors.textPrimary,
+              fontWeight: FontWeight.bold,
+              height: 1.2,
+            ),
+          ),
+          if (pushActionToEnd) const Spacer(),
           ?action,
         ],
       ),

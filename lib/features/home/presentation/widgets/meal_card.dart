@@ -158,18 +158,18 @@ class _MealCardItem extends StatelessWidget {
             width: double.infinity,
             height: 80,
             child: Wrap(
-              runSpacing: 30,
+              runSpacing: 20,
               direction: Axis.vertical,
               children: [
                 for (var dish in meal.dishes)
                   SizedBox(
-                    width: 100,
+                    width: 120,
                     child: Text(
                       dish,
                       style: TextTheme.of(
                         context,
                       ).bodyMedium?.copyWith(color: GoneColors.textPrimary),
-                      overflow: TextOverflow.ellipsis,
+                      overflow: TextOverflow.visible,
                     ),
                   ),
               ],

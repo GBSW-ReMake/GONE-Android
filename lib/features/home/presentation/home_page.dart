@@ -24,11 +24,6 @@ class _HomePageState extends ConsumerState<HomePage> {
   final PageController _scheduleController = PageController();
   final PageController _mealController = PageController();
 
-  int get _schedulePage =>
-      _scheduleController.hasClients ? _scheduleController.page!.round() : 0;
-
-  int get _mealPage =>
-      _mealController.hasClients ? _mealController.page!.round() : 0;
   int _month = 8;
 
   @override
