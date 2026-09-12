@@ -60,9 +60,12 @@ class _ScheduleCardState extends ConsumerState<ScheduleCard> {
         CardTitle(
           icon: 'section-schedule.png',
           label: '오늘 시간표',
-          action: Text('${_schedulePage + 1}/7', style: TextTheme.of(context).bodyMedium?.copyWith(
-            color: GoneColors.textSecondary
-          ),),
+          action: Text(
+            '${_schedulePage + 1}/7',
+            style: TextTheme.of(
+              context,
+            ).bodyMedium?.copyWith(color: GoneColors.textSecondary),
+          ),
         ),
         Container(
           width: double.infinity,
@@ -71,35 +74,48 @@ class _ScheduleCardState extends ConsumerState<ScheduleCard> {
             color: Colors.white,
           ),
           child: scheduleAsync.when(
-            error: (error, stackTrace) => Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              child: const Center(child: Text('시간표를 불러오지 못했습니다.')),
-            ),
+            error: (error, stackTrace) => const _EmptySchedule(),
             loading: () =>
                 const CircularProgressIndicator(color: GoneColors.primary),
-            data: (scheduleData) => SizedBox(
-              height: 134,
-              child: PageView.builder(
-                controller: _scheduleController,
-                itemCount: scheduleData.periods.length,
-                onPageChanged: (value) => setState(() {}),
-                itemBuilder: (context, index) => _ScheduleCardItem(
-                  currentPeriod: scheduleData.periods[index],
-                  nextPeriod: scheduleData.periods.length - 1 == index
-                      ? null
-                      : scheduleData.periods[index + 1],
-                  classSummary:
-                      '${scheduleData.grade}학년 ${scheduleData.classNm}반',
-                ),
-              ),
-            ),
+            data: (scheduleData) =>
+                scheduleData == null || scheduleData.periods.isEmpty
+                ? const _EmptySchedule()
+                : SizedBox(
+                    height: 134,
+                    child: PageView.builder(
+                      controller: _scheduleController,
+                      itemCount: scheduleData.periods.length,
+                      onPageChanged: (value) => setState(() {}),
+                      itemBuilder: (context, index) => _ScheduleCardItem(
+                        currentPeriod: scheduleData.periods[index],
+                        nextPeriod: scheduleData.periods.length - 1 == index
+                            ? null
+                            : scheduleData.periods[index + 1],
+                        classSummary:
+                            '${scheduleData.grade}학년 ${scheduleData.classNm}반',
+                      ),
+                    ),
+                  ),
           ),
         ),
       ],
+    );
+  }
+}
+
+class _EmptySchedule extends StatelessWidget {
+  const _EmptySchedule();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 134,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+      ),
+      child: const Center(child: Text('시간표를 불러오지 못했습니다.')),
     );
   }
 }
