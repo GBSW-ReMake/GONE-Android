@@ -100,7 +100,7 @@ class _MealCardState extends ConsumerState<MealCard> {
             loading: () =>
                 const CircularProgressIndicator(color: GoneColors.primary),
             data: (mealData) => SizedBox(
-              height: 217,
+              height: 222,
               child: PageView.builder(
                 controller: _mealController,
                 itemCount: mealData.length,
@@ -154,25 +154,25 @@ class _MealCardItem extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 15),
-          SizedBox(
-            width: double.infinity,
-            height: 80,
-            child: Wrap(
-              runSpacing: 20,
-              direction: Axis.vertical,
-              children: [
-                for (var dish in meal.dishes)
-                  SizedBox(
-                    width: 120,
-                    child: Text(
+          ClipPath(
+            clipBehavior: Clip.hardEdge,
+            child: SizedBox(
+              width: double.infinity,
+              height: 85,
+              child: Wrap(
+                runSpacing: 20,
+                direction: Axis.vertical,
+                children: [
+                  for (var dish in meal.dishes)
+                    Text(
                       dish,
                       style: TextTheme.of(
                         context,
                       ).bodyMedium?.copyWith(color: GoneColors.textPrimary),
                       overflow: TextOverflow.visible,
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 20),
